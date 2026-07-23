@@ -9,38 +9,219 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as HistoryRouteImport } from './routes/history'
+import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UtilitiesJwtDecoderRouteImport } from './routes/utilities.jwt-decoder'
+import { Route as UtilitiesJsonFormatterRouteImport } from './routes/utilities.json-formatter'
+import { Route as UtilitiesBase64RouteImport } from './routes/utilities.base64'
+import { Route as UtilitiesSlugRouteImport } from './routes/utilities.$slug'
+import { Route as ToolsCodeReviewerRouteImport } from './routes/tools.code-reviewer'
+import { Route as ToolsCodeGeneratorRouteImport } from './routes/tools.code-generator'
+import { Route as ToolsCodeConverterRouteImport } from './routes/tools.code-converter'
+import { Route as ToolsBugSolverRouteImport } from './routes/tools.bug-solver'
+import { Route as ToolsSlugRouteImport } from './routes/tools.$slug'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritesRoute = FavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UtilitiesJwtDecoderRoute = UtilitiesJwtDecoderRouteImport.update({
+  id: '/utilities/jwt-decoder',
+  path: '/utilities/jwt-decoder',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UtilitiesJsonFormatterRoute = UtilitiesJsonFormatterRouteImport.update({
+  id: '/utilities/json-formatter',
+  path: '/utilities/json-formatter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UtilitiesBase64Route = UtilitiesBase64RouteImport.update({
+  id: '/utilities/base64',
+  path: '/utilities/base64',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UtilitiesSlugRoute = UtilitiesSlugRouteImport.update({
+  id: '/utilities/$slug',
+  path: '/utilities/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCodeReviewerRoute = ToolsCodeReviewerRouteImport.update({
+  id: '/tools/code-reviewer',
+  path: '/tools/code-reviewer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCodeGeneratorRoute = ToolsCodeGeneratorRouteImport.update({
+  id: '/tools/code-generator',
+  path: '/tools/code-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCodeConverterRoute = ToolsCodeConverterRouteImport.update({
+  id: '/tools/code-converter',
+  path: '/tools/code-converter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsBugSolverRoute = ToolsBugSolverRouteImport.update({
+  id: '/tools/bug-solver',
+  path: '/tools/bug-solver',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsSlugRoute = ToolsSlugRouteImport.update({
+  id: '/tools/$slug',
+  path: '/tools/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/favorites': typeof FavoritesRoute
+  '/history': typeof HistoryRoute
+  '/settings': typeof SettingsRoute
+  '/tools/$slug': typeof ToolsSlugRoute
+  '/tools/bug-solver': typeof ToolsBugSolverRoute
+  '/tools/code-converter': typeof ToolsCodeConverterRoute
+  '/tools/code-generator': typeof ToolsCodeGeneratorRoute
+  '/tools/code-reviewer': typeof ToolsCodeReviewerRoute
+  '/utilities/$slug': typeof UtilitiesSlugRoute
+  '/utilities/base64': typeof UtilitiesBase64Route
+  '/utilities/json-formatter': typeof UtilitiesJsonFormatterRoute
+  '/utilities/jwt-decoder': typeof UtilitiesJwtDecoderRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/favorites': typeof FavoritesRoute
+  '/history': typeof HistoryRoute
+  '/settings': typeof SettingsRoute
+  '/tools/$slug': typeof ToolsSlugRoute
+  '/tools/bug-solver': typeof ToolsBugSolverRoute
+  '/tools/code-converter': typeof ToolsCodeConverterRoute
+  '/tools/code-generator': typeof ToolsCodeGeneratorRoute
+  '/tools/code-reviewer': typeof ToolsCodeReviewerRoute
+  '/utilities/$slug': typeof UtilitiesSlugRoute
+  '/utilities/base64': typeof UtilitiesBase64Route
+  '/utilities/json-formatter': typeof UtilitiesJsonFormatterRoute
+  '/utilities/jwt-decoder': typeof UtilitiesJwtDecoderRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/favorites': typeof FavoritesRoute
+  '/history': typeof HistoryRoute
+  '/settings': typeof SettingsRoute
+  '/tools/$slug': typeof ToolsSlugRoute
+  '/tools/bug-solver': typeof ToolsBugSolverRoute
+  '/tools/code-converter': typeof ToolsCodeConverterRoute
+  '/tools/code-generator': typeof ToolsCodeGeneratorRoute
+  '/tools/code-reviewer': typeof ToolsCodeReviewerRoute
+  '/utilities/$slug': typeof UtilitiesSlugRoute
+  '/utilities/base64': typeof UtilitiesBase64Route
+  '/utilities/json-formatter': typeof UtilitiesJsonFormatterRoute
+  '/utilities/jwt-decoder': typeof UtilitiesJwtDecoderRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/favorites'
+    | '/history'
+    | '/settings'
+    | '/tools/$slug'
+    | '/tools/bug-solver'
+    | '/tools/code-converter'
+    | '/tools/code-generator'
+    | '/tools/code-reviewer'
+    | '/utilities/$slug'
+    | '/utilities/base64'
+    | '/utilities/json-formatter'
+    | '/utilities/jwt-decoder'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/favorites'
+    | '/history'
+    | '/settings'
+    | '/tools/$slug'
+    | '/tools/bug-solver'
+    | '/tools/code-converter'
+    | '/tools/code-generator'
+    | '/tools/code-reviewer'
+    | '/utilities/$slug'
+    | '/utilities/base64'
+    | '/utilities/json-formatter'
+    | '/utilities/jwt-decoder'
+  id:
+    | '__root__'
+    | '/'
+    | '/favorites'
+    | '/history'
+    | '/settings'
+    | '/tools/$slug'
+    | '/tools/bug-solver'
+    | '/tools/code-converter'
+    | '/tools/code-generator'
+    | '/tools/code-reviewer'
+    | '/utilities/$slug'
+    | '/utilities/base64'
+    | '/utilities/json-formatter'
+    | '/utilities/jwt-decoder'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FavoritesRoute: typeof FavoritesRoute
+  HistoryRoute: typeof HistoryRoute
+  SettingsRoute: typeof SettingsRoute
+  ToolsSlugRoute: typeof ToolsSlugRoute
+  ToolsBugSolverRoute: typeof ToolsBugSolverRoute
+  ToolsCodeConverterRoute: typeof ToolsCodeConverterRoute
+  ToolsCodeGeneratorRoute: typeof ToolsCodeGeneratorRoute
+  ToolsCodeReviewerRoute: typeof ToolsCodeReviewerRoute
+  UtilitiesSlugRoute: typeof UtilitiesSlugRoute
+  UtilitiesBase64Route: typeof UtilitiesBase64Route
+  UtilitiesJsonFormatterRoute: typeof UtilitiesJsonFormatterRoute
+  UtilitiesJwtDecoderRoute: typeof UtilitiesJwtDecoderRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favorites': {
+      id: '/favorites'
+      path: '/favorites'
+      fullPath: '/favorites'
+      preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +229,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/utilities/jwt-decoder': {
+      id: '/utilities/jwt-decoder'
+      path: '/utilities/jwt-decoder'
+      fullPath: '/utilities/jwt-decoder'
+      preLoaderRoute: typeof UtilitiesJwtDecoderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/utilities/json-formatter': {
+      id: '/utilities/json-formatter'
+      path: '/utilities/json-formatter'
+      fullPath: '/utilities/json-formatter'
+      preLoaderRoute: typeof UtilitiesJsonFormatterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/utilities/base64': {
+      id: '/utilities/base64'
+      path: '/utilities/base64'
+      fullPath: '/utilities/base64'
+      preLoaderRoute: typeof UtilitiesBase64RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/utilities/$slug': {
+      id: '/utilities/$slug'
+      path: '/utilities/$slug'
+      fullPath: '/utilities/$slug'
+      preLoaderRoute: typeof UtilitiesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/code-reviewer': {
+      id: '/tools/code-reviewer'
+      path: '/tools/code-reviewer'
+      fullPath: '/tools/code-reviewer'
+      preLoaderRoute: typeof ToolsCodeReviewerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/code-generator': {
+      id: '/tools/code-generator'
+      path: '/tools/code-generator'
+      fullPath: '/tools/code-generator'
+      preLoaderRoute: typeof ToolsCodeGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/code-converter': {
+      id: '/tools/code-converter'
+      path: '/tools/code-converter'
+      fullPath: '/tools/code-converter'
+      preLoaderRoute: typeof ToolsCodeConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/bug-solver': {
+      id: '/tools/bug-solver'
+      path: '/tools/bug-solver'
+      fullPath: '/tools/bug-solver'
+      preLoaderRoute: typeof ToolsBugSolverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/$slug': {
+      id: '/tools/$slug'
+      path: '/tools/$slug'
+      fullPath: '/tools/$slug'
+      preLoaderRoute: typeof ToolsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FavoritesRoute: FavoritesRoute,
+  HistoryRoute: HistoryRoute,
+  SettingsRoute: SettingsRoute,
+  ToolsSlugRoute: ToolsSlugRoute,
+  ToolsBugSolverRoute: ToolsBugSolverRoute,
+  ToolsCodeConverterRoute: ToolsCodeConverterRoute,
+  ToolsCodeGeneratorRoute: ToolsCodeGeneratorRoute,
+  ToolsCodeReviewerRoute: ToolsCodeReviewerRoute,
+  UtilitiesSlugRoute: UtilitiesSlugRoute,
+  UtilitiesBase64Route: UtilitiesBase64Route,
+  UtilitiesJsonFormatterRoute: UtilitiesJsonFormatterRoute,
+  UtilitiesJwtDecoderRoute: UtilitiesJwtDecoderRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
