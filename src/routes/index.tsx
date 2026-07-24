@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
   Activity,
   Sparkles,
@@ -6,162 +8,752 @@ import {
   Save,
   FolderCode,
   Star,
+  Bug,
+  Code2,
+  Database,
+  Regex,
+  TerminalSquare,
+  BookOpen,
+  FileText,
+  GitCompare,
+  Wand2,
+  Zap,
+  Lock,
+  Globe,
+  Layers,
+  Rocket,
+  Search,
+  TrendingUp,
+  Pin,
+  Clock,
+  ChevronRight,
 } from "lucide-react";
 import { StatCard } from "@/components/tools/StatCard";
 import { QuickActionCard } from "@/components/tools/QuickActionCard";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { TOOLS } from "@/features/tools/registry";
 import { useHistory, useHistoryStats } from "@/features/history/useHistory";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const SITE_URL = "https://codemateai.lovable.app";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Dashboard — CodeMateAI" },
+      { title: "CodeMateAI — AI Developer Platform for Code, APIs, SQL & Docs" },
       {
         name: "description",
         content:
-          "Your AI developer command center — code generation, review, debugging, conversion and utilities.",
+          "CodeMateAI is a premium AI developer platform to generate code, review pull requests, fix bugs, convert languages, and generate APIs, SQL, regex, README and documentation.",
       },
-      { property: "og:title", content: "CodeMateAI Dashboard" },
+      { property: "og:type", content: "website" },
+      { property: "og:title", content: "CodeMateAI — AI Developer Platform" },
       {
         property: "og:description",
-        content: "Every AI dev tool in one polished workspace.",
+        content:
+          "Every AI dev tool in one polished workspace — code generation, review, debugging, APIs, SQL, regex, README and documentation.",
+      },
+      { property: "og:url", content: SITE_URL },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "CodeMateAI — AI Developer Platform" },
+      {
+        name: "twitter:description",
+        content:
+          "Generate, review, convert, debug and document code with AI — one dashboard.",
+      },
+    ],
+    links: [{ rel: "canonical", href: SITE_URL }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: "CodeMateAI",
+          applicationCategory: "DeveloperApplication",
+          operatingSystem: "Web",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          description:
+            "AI developer platform to generate code, review code, fix bugs, convert languages, and generate APIs, SQL, regex, README and documentation.",
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQ.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          ],
+        }),
       },
     ],
   }),
   component: Dashboard,
 });
 
+const POPULAR_SEARCHES: { label: string; to: string; fill?: string }[] = [
+  { label: "How to generate Python code", to: "/tools/code-generator" },
+  { label: "Fix JavaScript bugs", to: "/tools/bug-solver" },
+  { label: "Create SQL queries", to: "/tools/sql-generator" },
+  { label: "Generate REST API", to: "/tools/api-generator" },
+  { label: "Generate Express API", to: "/tools/api-generator" },
+  { label: "Generate Regex", to: "/tools/regex-generator" },
+  { label: "Generate README", to: "/tools/readme-generator" },
+  { label: "Convert Java to Python", to: "/tools/code-converter" },
+  { label: "Convert HTML to JSX", to: "/tools/code-converter" },
+  { label: "Review React code", to: "/tools/code-reviewer" },
+  { label: "Generate Dockerfile", to: "/tools/code-generator" },
+  { label: "Generate Tailwind CSS", to: "/tools/code-generator" },
+  { label: "Create JWT token", to: "/utilities/jwt-decoder" },
+  { label: "Decode JWT", to: "/utilities/jwt-decoder" },
+  { label: "Format JSON", to: "/utilities/json-formatter" },
+  { label: "Encode Base64", to: "/utilities/base64" },
+  { label: "Decode Base64", to: "/utilities/base64" },
+  { label: "Generate Git commands", to: "/tools/code-generator" },
+];
+
+const PLATFORM_FEATURES = [
+  { icon: Wand2, title: "Generate production-ready code", desc: "Ship features faster with AI-generated code across 12+ languages.", grad: "from-indigo-500 to-violet-500" },
+  { icon: ShieldCheck, title: "Review code with AI", desc: "Automated review with scores, bugs, dead code and refactor suggestions.", grad: "from-emerald-500 to-teal-500" },
+  { icon: Bug, title: "Fix programming bugs", desc: "Detect syntax, logic and runtime errors and get a fixed version instantly.", grad: "from-rose-500 to-red-500" },
+  { icon: GitCompare, title: "Convert programming languages", desc: "Translate code across JavaScript, Python, Java, Go, Rust and more.", grad: "from-orange-500 to-amber-500" },
+  { icon: TerminalSquare, title: "Generate APIs", desc: "Express, FastAPI, Flask, Django or Spring Boot — with auth, CRUD, Swagger.", grad: "from-fuchsia-500 to-pink-500" },
+  { icon: Database, title: "Generate SQL", desc: "Natural-language queries with optimization notes across popular dialects.", grad: "from-cyan-500 to-sky-500" },
+  { icon: Regex, title: "Generate Regex", desc: "Explained patterns with a live tester and match highlighting.", grad: "from-violet-500 to-purple-500" },
+  { icon: BookOpen, title: "Generate Documentation", desc: "Markdown, HTML, JSDoc, Python docstrings and Javadoc.", grad: "from-sky-500 to-blue-500" },
+  { icon: FileText, title: "Generate README", desc: "Professional READMEs with badges, install, usage and screenshots.", grad: "from-lime-500 to-emerald-500" },
+];
+
+const BUILD_CARDS = [
+  { icon: Globe, title: "Web Applications", items: ["React", "Next.js", "Angular", "Vue"], grad: "from-indigo-500 to-blue-500" },
+  { icon: TerminalSquare, title: "Backend APIs", items: ["Node.js", "Python", "Java", "PHP", "Go"], grad: "from-fuchsia-500 to-pink-500" },
+  { icon: Rocket, title: "Mobile Apps", items: ["Flutter", "React Native", "Swift", "Kotlin"], grad: "from-rose-500 to-red-500" },
+  { icon: Database, title: "Databases", items: ["MySQL", "PostgreSQL", "MongoDB", "SQLite"], grad: "from-cyan-500 to-sky-500" },
+  { icon: Layers, title: "Developer Utilities", items: ["JWT", "JSON", "Regex", "Base64"], grad: "from-emerald-500 to-teal-500" },
+];
+
+const WHY_CARDS = [
+  { icon: Zap, title: "Fast AI generation", desc: "Millisecond streaming responses powered by the Lovable AI Gateway." },
+  { icon: ShieldCheck, title: "Professional output", desc: "Structured, sectioned results ready to copy into real projects." },
+  { icon: Globe, title: "Multiple languages", desc: "From JavaScript and Python to Go, Rust, Kotlin and Swift." },
+  { icon: Lock, title: "Secure by design", desc: "Your prompts never train external models — history stays on your device." },
+  { icon: Rocket, title: "No installation", desc: "Runs entirely in the browser — nothing to set up or configure." },
+  { icon: Layers, title: "One unified dashboard", desc: "History, favorites, utilities and settings all in one workspace." },
+];
+
+const HOW_STEPS = [
+  { n: "01", title: "Describe your task", desc: "Type a plain-English prompt or paste the code you want to work with." },
+  { n: "02", title: "Choose an AI tool", desc: "Generator, reviewer, bug solver, converter, SQL, regex, API or docs." },
+  { n: "03", title: "Generate result", desc: "Get structured, syntax-highlighted Markdown ready for real use." },
+  { n: "04", title: "Copy or download", desc: "One-click copy, download, share or save to your history and favorites." },
+];
+
+const FAQ: { q: string; a: string }[] = [
+  { q: "What is an AI Code Generator?", a: "An AI Code Generator turns natural-language prompts into working code. CodeMateAI supports 12+ languages and generates complete, explained snippets with algorithm, complexity and edge-case analysis." },
+  { q: "How does AI Code Review work?", a: "You paste your code, and the AI scores it across quality, readability, performance, security and best-practices — surfacing bugs, dead code and a corrected version." },
+  { q: "Why should I use CodeMateAI?", a: "CodeMateAI unifies the entire AI development workflow — generation, review, debugging, conversion and documentation — into one polished workspace so you spend less time context-switching." },
+  { q: "Can AI generate SQL queries?", a: "Yes — describe what you need in plain English and CodeMateAI produces optimized SQL for PostgreSQL, MySQL, SQLite or SQL Server, along with explanation and an assumed schema." },
+  { q: "Can AI generate APIs?", a: "Yes. The API Generator scaffolds Express, FastAPI, Flask, Django or Spring Boot APIs with authentication, CRUD, validation, pagination, Swagger and a Postman collection." },
+  { q: "Can AI create Regex?", a: "The Regex Generator returns a bulletproof pattern with a token-by-token explanation and a live tester so you can validate against your own sample input." },
+  { q: "Can AI generate documentation?", a: "Yes — generate API, function, class or project docs in Markdown, HTML, JSDoc, Python docstrings or Javadoc, straight from your source code." },
+  { q: "Is CodeMateAI free to use?", a: "The core tools are free to use. Usage is subject to the Lovable AI Gateway's monthly allowance; heavy usage may require adding credits to your workspace." },
+  { q: "Can AI convert programming languages?", a: "Yes. The Code Converter translates between languages while preserving semantics and highlighting syntax differences and performance trade-offs." },
+  { q: "Which languages are supported?", a: "JavaScript, TypeScript, Python, Java, Go, Rust, C++, C#, PHP, Ruby, Swift and Kotlin, plus frameworks like React, Next.js, FastAPI, Django and Spring Boot." },
+  { q: "How accurate is AI code generation?", a: "Results are high quality for common tasks and always come with explanations and complexity notes — treat them as a strong starting point and review before shipping to production." },
+  { q: "Is my code secure?", a: "Prompts are sent to the AI gateway only for the current request. History and favorites are stored locally in your browser — not on our servers." },
+];
+
+const CATEGORIES: { title: string; ids: string[]; grad: string }[] = [
+  {
+    title: "AI Coding",
+    ids: ["code-generator", "bug-solver", "code-reviewer", "code-converter"],
+    grad: "from-indigo-500 to-violet-500",
+  },
+  {
+    title: "Generators",
+    ids: ["documentation-generator", "readme-generator", "regex-generator", "sql-generator", "api-generator"],
+    grad: "from-fuchsia-500 to-pink-500",
+  },
+  {
+    title: "Utilities",
+    ids: ["json-formatter", "jwt-decoder", "base64"],
+    grad: "from-emerald-500 to-teal-500",
+  },
+];
+
+function TypingHeadline() {
+  const words = ["modern developers.", "shipping teams.", "indie hackers.", "solo builders."];
+  const [i, setI] = useState(0);
+  const [text, setText] = useState("");
+  const [dir, setDir] = useState<1 | -1>(1);
+  useEffect(() => {
+    const current = words[i % words.length];
+    const done = dir === 1 && text === current;
+    const empty = dir === -1 && text === "";
+    if (done) {
+      const t = setTimeout(() => setDir(-1), 1400);
+      return () => clearTimeout(t);
+    }
+    if (empty) {
+      setDir(1);
+      setI((n) => n + 1);
+      return;
+    }
+    const t = setTimeout(() => {
+      setText(dir === 1 ? current.slice(0, text.length + 1) : current.slice(0, text.length - 1));
+    }, dir === 1 ? 70 : 40);
+    return () => clearTimeout(t);
+  }, [text, dir, i]);
+  return (
+    <span className="bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
+      {text}
+      <span className="ml-0.5 inline-block h-[1em] w-[2px] translate-y-1 animate-pulse bg-fuchsia-500 align-middle" />
+    </span>
+  );
+}
+
+function AnimatedNumber({ value }: { value: number }) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    const start = performance.now();
+    const dur = 700;
+    const from = 0;
+    const to = value;
+    let raf = 0;
+    const step = (t: number) => {
+      const p = Math.min(1, (t - start) / dur);
+      setN(Math.round(from + (to - from) * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [value]);
+  return <>{n}</>;
+}
+
 function Dashboard() {
   const stats = useHistoryStats();
-  const { entries } = useHistory();
-  const featured = TOOLS.slice(0, 12);
+  const { entries, toggleFavorite } = useHistory();
+  const featured = TOOLS.filter((t) => t.status === "ready").slice(0, 12);
   const recent = entries.slice(0, 5);
+  const trending = TOOLS.filter((t) => t.status === "ready").slice(0, 6);
+  const pinned = entries.filter((e) => e.favorite).slice(0, 4);
+  const usageByTool = entries.reduce<Record<string, number>>((acc, e) => {
+    acc[e.toolId] = (acc[e.toolId] ?? 0) + 1;
+    return acc;
+  }, {});
+  const popular = [...TOOLS]
+    .filter((t) => t.status === "ready")
+    .sort((a, b) => (usageByTool[b.id] ?? 0) - (usageByTool[a.id] ?? 0))
+    .slice(0, 4);
+  const continueWorking = recent[0];
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-6 py-8">
-      {/* Hero */}
-      <section className="relative mb-10 overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-white via-white to-[oklch(0.97_0.02_290)] p-8 shadow-sm">
-        <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 opacity-20 blur-3xl" />
-        <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 opacity-10 blur-3xl" />
-        <div className="relative">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur-sm">
-            <Sparkles className="h-3.5 w-3.5 text-violet-500" />
-            Powered by Lovable AI
-          </div>
-          <h1 className="mt-4 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
-            The AI toolkit for
-            <span className="bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 bg-clip-text text-transparent">
-              {" "}modern developers.
-            </span>
-          </h1>
-          <p className="mt-3 max-w-xl text-sm text-muted-foreground">
-            Generate. Review. Convert. Optimize. Learn. Thirty+ tools, one polished
-            workspace.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-2">
-            <Link
-              to="/tools/code-generator"
-              className="inline-flex items-center gap-2 rounded-2xl bg-foreground px-4 py-2 text-sm font-medium text-background transition hover:opacity-90"
-            >
-              <Sparkles className="h-4 w-4" /> Launch Code Generator
-            </Link>
-            <Link
-              to="/tools/code-reviewer"
-              className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background/70 px-4 py-2 text-sm font-medium backdrop-blur-sm transition hover:bg-background"
-            >
-              <ShieldCheck className="h-4 w-4" /> Review My Code
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="mb-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-        <StatCard
-          label="Today's AI Requests"
-          value={stats.today}
-          icon={Activity}
-          gradient="from-indigo-500 to-violet-500"
-        />
-        <StatCard
-          label="Programs Generated"
-          value={stats.byTool("code-generator")}
-          icon={Sparkles}
-          gradient="from-fuchsia-500 to-pink-500"
-        />
-        <StatCard
-          label="Code Reviews"
-          value={stats.byTool("code-reviewer")}
-          icon={ShieldCheck}
-          gradient="from-emerald-500 to-teal-500"
-        />
-        <StatCard
-          label="Bugs Solved"
-          value={stats.byTool("bug-solver")}
-          icon={FolderCode}
-          gradient="from-rose-500 to-red-500"
-        />
-        <StatCard
-          label="Saved Snippets"
-          value={stats.favorites}
-          icon={Star}
-          gradient="from-amber-500 to-orange-500"
-        />
-        <StatCard
-          label="Total Runs"
-          value={stats.total}
-          icon={Save}
-          gradient="from-cyan-500 to-blue-500"
-        />
-      </section>
-
-      {/* Quick actions */}
-      <section className="mb-10">
-        <div className="mb-4 flex items-baseline justify-between">
-          <h2 className="text-lg font-semibold tracking-tight">Quick actions</h2>
-          <span className="text-xs text-muted-foreground">
-            {TOOLS.length} tools available
-          </span>
-        </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {featured.map((t) => (
-            <QuickActionCard key={t.id} tool={t} />
-          ))}
-        </div>
-      </section>
-
-      {/* Recent activity */}
-      <section>
-        <div className="mb-4 flex items-baseline justify-between">
-          <h2 className="text-lg font-semibold tracking-tight">Recent activity</h2>
-          <Link to="/history" className="text-xs text-muted-foreground hover:text-foreground">
-            View all →
-          </Link>
-        </div>
-        <div className="rounded-3xl border border-border/60 bg-card/70 backdrop-blur-sm">
-          {recent.length === 0 ? (
-            <div className="px-6 py-10 text-center text-sm text-muted-foreground">
-              Nothing yet. Launch a tool above to get started.
+    <div>
+      <div className="mx-auto w-full max-w-7xl px-6 py-8">
+        {/* Hero */}
+        <section className="relative mb-10 overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-white via-white to-[oklch(0.97_0.02_290)] p-8 shadow-sm sm:p-12">
+          <motion.div
+            animate={{ x: [0, 20, 0], y: [0, -10, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 opacity-20 blur-3xl"
+          />
+          <motion.div
+            animate={{ x: [0, -15, 0], y: [0, 12, 0] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -left-24 -bottom-24 h-72 w-72 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 opacity-15 blur-3xl"
+          />
+          <div className="relative">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur-sm">
+              <Sparkles className="h-3.5 w-3.5 text-violet-500" />
+              An AI developer platform — powered by Lovable AI
             </div>
-          ) : (
-            <ul className="divide-y divide-border/60">
-              {recent.map((e) => (
-                <li key={e.id} className="flex items-center justify-between px-6 py-3 text-sm">
-                  <div className="min-w-0">
-                    <div className="font-medium">{e.title}</div>
-                    <div className="truncate text-xs text-muted-foreground">
-                      {e.input.slice(0, 80)}
-                    </div>
+            <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-tight sm:text-6xl">
+              The AI toolkit for
+              <br className="hidden sm:inline" /> <TypingHeadline />
+            </h1>
+            <p className="mt-4 max-w-2xl text-base text-muted-foreground">
+              Generate production-ready code, review pull requests, fix bugs, convert
+              languages, and produce APIs, SQL, regex, README and documentation — all in
+              one polished workspace.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-2">
+              <Link
+                to="/tools/code-generator"
+                className="group inline-flex items-center gap-2 rounded-2xl bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-lg transition hover:opacity-90"
+              >
+                <Sparkles className="h-4 w-4" /> Start generating code
+                <ChevronRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+              </Link>
+              <Link
+                to="/tools/code-reviewer"
+                className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background/70 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:bg-background"
+              >
+                <ShieldCheck className="h-4 w-4" /> Review my code
+              </Link>
+            </div>
+
+            {/* Popular searches */}
+            <div className="mt-8">
+              <div className="mb-2 flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                <Search className="h-3.5 w-3.5" /> Popular searches
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {POPULAR_SEARCHES.map((p) => (
+                  <Link
+                    key={p.label}
+                    to={p.to}
+                    className="rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-foreground/80 transition hover:bg-background hover:text-foreground hover:shadow-sm"
+                  >
+                    {p.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Stats */}
+        <section className="mb-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+          <StatCard label="Today's AI requests" value={stats.today} icon={Activity} gradient="from-indigo-500 to-violet-500" />
+          <StatCard label="Programs generated" value={stats.byTool("code-generator")} icon={Sparkles} gradient="from-fuchsia-500 to-pink-500" />
+          <StatCard label="Code reviews" value={stats.byTool("code-reviewer")} icon={ShieldCheck} gradient="from-emerald-500 to-teal-500" />
+          <StatCard label="Bugs solved" value={stats.byTool("bug-solver")} icon={FolderCode} gradient="from-rose-500 to-red-500" />
+          <StatCard label="Saved snippets" value={stats.favorites} icon={Star} gradient="from-amber-500 to-orange-500" />
+          <StatCard label="Total runs" value={stats.total} icon={Save} gradient="from-cyan-500 to-blue-500" />
+        </section>
+
+        {/* Continue working */}
+        {continueWorking && (
+          <section className="mb-10">
+            <div className="rounded-3xl border border-border/60 bg-gradient-to-r from-indigo-50 via-white to-fuchsia-50 p-5 shadow-sm">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Continue working
                   </div>
-                  <div className="ml-4 text-xs text-muted-foreground">
-                    {new Date(e.createdAt).toLocaleString()}
+                  <div className="mt-1 truncate text-sm font-semibold">
+                    {continueWorking.title}
                   </div>
+                  <div className="mt-0.5 truncate text-xs text-muted-foreground">
+                    {continueWorking.input.slice(0, 120)}
+                  </div>
+                </div>
+                <Link
+                  to="/history"
+                  className="inline-flex items-center gap-1 rounded-2xl bg-foreground px-4 py-2 text-xs font-medium text-background transition hover:opacity-90"
+                >
+                  Resume <ChevronRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* AI Developer Platform features */}
+        <section className="mb-14">
+          <div className="mb-6 flex items-baseline justify-between">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wider text-violet-600">
+                AI Developer Platform
+              </p>
+              <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+                Everything you need to ship faster
+              </h2>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {PLATFORM_FEATURES.map((f, idx) => {
+              const Icon = f.icon;
+              return (
+                <motion.div
+                  key={f.title}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.35, delay: idx * 0.03 }}
+                  whileHover={{ y: -3 }}
+                  className="group relative overflow-hidden rounded-3xl border border-border/60 bg-white/60 p-5 shadow-sm backdrop-blur-md transition hover:shadow-xl"
+                >
+                  <div className={`absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gradient-to-br ${f.grad} opacity-10 blur-2xl transition group-hover:opacity-30`} />
+                  <div className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${f.grad} text-white shadow-md`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mt-4 text-sm font-semibold tracking-tight">{f.title}</h3>
+                  <p className="mt-1 text-xs text-muted-foreground">{f.desc}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Quick actions */}
+        <section className="mb-14">
+          <div className="mb-4 flex items-baseline justify-between">
+            <h2 className="text-lg font-semibold tracking-tight">Quick launch</h2>
+            <span className="text-xs text-muted-foreground">{TOOLS.length} tools available</span>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {featured.map((t) => (
+              <QuickActionCard key={t.id} tool={t} />
+            ))}
+          </div>
+        </section>
+
+        {/* Trending / Popular / Pinned */}
+        <section className="mb-14 grid gap-6 lg:grid-cols-3">
+          <div className="rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm">
+            <div className="flex items-center gap-2 text-sm font-semibold">
+              <TrendingUp className="h-4 w-4 text-rose-500" /> Trending tools
+            </div>
+            <ul className="mt-3 space-y-2">
+              {trending.map((t) => (
+                <li key={t.id}>
+                  <Link to={t.to} className="flex items-center justify-between rounded-xl px-2 py-1.5 text-sm transition hover:bg-muted/50">
+                    <span className="truncate">{t.title}</span>
+                    <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
+                  </Link>
                 </li>
               ))}
             </ul>
-          )}
-        </div>
-      </section>
+          </div>
+          <div className="rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm">
+            <div className="flex items-center gap-2 text-sm font-semibold">
+              <Star className="h-4 w-4 text-amber-500" /> Popular for you
+            </div>
+            <ul className="mt-3 space-y-2">
+              {popular.map((t) => (
+                <li key={t.id}>
+                  <Link to={t.to} className="flex items-center justify-between rounded-xl px-2 py-1.5 text-sm transition hover:bg-muted/50">
+                    <span className="truncate">{t.title}</span>
+                    <span className="text-[11px] text-muted-foreground">
+                      {usageByTool[t.id] ?? 0} runs
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm">
+            <div className="flex items-center gap-2 text-sm font-semibold">
+              <Pin className="h-4 w-4 text-indigo-500" /> Pinned favorites
+            </div>
+            {pinned.length === 0 ? (
+              <p className="mt-3 text-xs text-muted-foreground">
+                Star any result to pin it here for one-click access.
+              </p>
+            ) : (
+              <ul className="mt-3 space-y-2">
+                {pinned.map((p) => (
+                  <li key={p.id} className="flex items-center justify-between gap-2">
+                    <button
+                      onClick={() => toggleFavorite(p.id)}
+                      className="truncate text-left text-sm hover:text-foreground"
+                    >
+                      {p.title}
+                    </button>
+                    <span className="text-[11px] text-muted-foreground">
+                      {new Date(p.createdAt).toLocaleDateString()}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+
+        {/* What can you build */}
+        <section className="mb-14">
+          <div className="mb-6">
+            <p className="text-xs font-medium uppercase tracking-wider text-fuchsia-600">
+              What can you build
+            </p>
+            <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+              From web apps to APIs, mobile and beyond
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {BUILD_CARDS.map((b) => {
+              const Icon = b.icon;
+              return (
+                <motion.div
+                  key={b.title}
+                  whileHover={{ y: -3 }}
+                  className="group relative overflow-hidden rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm transition hover:shadow-lg"
+                >
+                  <div className={`absolute -right-10 -top-10 h-28 w-28 rounded-full bg-gradient-to-br ${b.grad} opacity-10 blur-2xl transition group-hover:opacity-25`} />
+                  <div className={`inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br ${b.grad} text-white shadow`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mt-3 text-sm font-semibold">{b.title}</h3>
+                  <p className="mt-1 text-xs text-muted-foreground">{b.items.join(" · ")}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Tool categories */}
+        <section className="mb-14">
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold tracking-tight">Browse by category</h2>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-3">
+            {CATEGORIES.map((cat) => (
+              <div key={cat.title} className="rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm">
+                <div className={`inline-flex rounded-full bg-gradient-to-r ${cat.grad} px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-white shadow`}>
+                  {cat.title}
+                </div>
+                <ul className="mt-4 space-y-1.5">
+                  {cat.ids.map((id) => {
+                    const t = TOOLS.find((x) => x.id === id);
+                    if (!t) return null;
+                    const Icon = t.icon;
+                    return (
+                      <li key={id}>
+                        <Link to={t.to} className="flex items-center gap-3 rounded-xl px-2 py-1.5 text-sm transition hover:bg-muted/50">
+                          <div className={`flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br ${t.gradient} text-white`}>
+                            <Icon className="h-3.5 w-3.5" />
+                          </div>
+                          {t.title}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* What is CodeMateAI */}
+        <section className="mb-14 grid gap-6 lg:grid-cols-2">
+          <div className="rounded-3xl border border-border/60 bg-card/70 p-8 shadow-sm backdrop-blur-sm">
+            <h2 className="text-2xl font-semibold tracking-tight">What is CodeMateAI?</h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              CodeMateAI is a free AI coding tool and programming assistant that lives
+              in your browser. It's an AI code generator online that helps developers
+              write, understand, review and refactor code across the languages and
+              frameworks they use every day. Instead of jumping between chat windows,
+              docs and playgrounds, CodeMateAI gives you a single dashboard where an AI
+              programming assistant handles the repetitive work — from scaffolding APIs
+              to explaining tricky regex — so you can focus on the interesting problems.
+            </p>
+          </div>
+          <div className="rounded-3xl border border-border/60 bg-card/70 p-8 shadow-sm backdrop-blur-sm">
+            <h2 className="text-2xl font-semibold tracking-tight">How it works</h2>
+            <ol className="mt-4 space-y-3">
+              {HOW_STEPS.map((s) => (
+                <li key={s.n} className="flex gap-4">
+                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-fuchsia-500 text-xs font-semibold text-white">
+                    {s.n}
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold">{s.title}</div>
+                    <div className="text-xs text-muted-foreground">{s.desc}</div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* Why choose */}
+        <section className="mb-14">
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Why developers choose CodeMateAI
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              A modern AI software development workspace built around the best AI coding
+              tools for real projects.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {WHY_CARDS.map((c) => {
+              const Icon = c.icon;
+              return (
+                <motion.div
+                  key={c.title}
+                  whileHover={{ y: -3 }}
+                  className="rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm transition hover:shadow-md"
+                >
+                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-800 to-slate-600 text-white shadow">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mt-3 text-sm font-semibold">{c.title}</h3>
+                  <p className="mt-1 text-xs text-muted-foreground">{c.desc}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Comparison */}
+        <section className="mb-14">
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              CodeMateAI vs. copy-pasting from a chat window
+            </h2>
+          </div>
+          <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-sm backdrop-blur-sm">
+            <table className="w-full text-sm">
+              <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
+                <tr>
+                  <th className="px-4 py-3 text-left">Capability</th>
+                  <th className="px-4 py-3 text-left">CodeMateAI</th>
+                  <th className="px-4 py-3 text-left">Generic AI chat</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border/60">
+                {[
+                  ["Dedicated code generator", "✓ Structured output", "Free text only"],
+                  ["AI code review with scores", "✓ Per-category scoring", "Ad-hoc"],
+                  ["Bug solver with fix", "✓ Detects & fixes", "Manual"],
+                  ["SQL, Regex, API, README", "✓ Purpose-built tools", "Prompt engineering"],
+                  ["History & favorites", "✓ Local & private", "None"],
+                  ["Utilities (JSON, JWT, Base64)", "✓ Built-in", "External sites"],
+                ].map((row) => (
+                  <tr key={row[0]}>
+                    <td className="px-4 py-3 font-medium">{row[0]}</td>
+                    <td className="px-4 py-3 text-emerald-700">{row[1]}</td>
+                    <td className="px-4 py-3 text-muted-foreground">{row[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Recent activity */}
+        <section className="mb-14">
+          <div className="mb-4 flex items-baseline justify-between">
+            <h2 className="text-lg font-semibold tracking-tight flex items-center gap-2">
+              <Clock className="h-4 w-4 text-muted-foreground" /> Recently used
+            </h2>
+            <Link to="/history" className="text-xs text-muted-foreground hover:text-foreground">
+              View all →
+            </Link>
+          </div>
+          <div className="rounded-3xl border border-border/60 bg-card/70 backdrop-blur-sm">
+            {recent.length === 0 ? (
+              <div className="px-6 py-10 text-center text-sm text-muted-foreground">
+                Nothing yet. Launch a tool above to get started.
+              </div>
+            ) : (
+              <ul className="divide-y divide-border/60">
+                {recent.map((e) => (
+                  <li key={e.id} className="flex items-center justify-between px-6 py-3 text-sm">
+                    <div className="min-w-0">
+                      <div className="font-medium">{e.title}</div>
+                      <div className="truncate text-xs text-muted-foreground">
+                        {e.input.slice(0, 80)}
+                      </div>
+                    </div>
+                    <div className="ml-4 text-xs text-muted-foreground">
+                      {new Date(e.createdAt).toLocaleString()}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+
+        {/* Counters */}
+        <section className="mb-14 grid grid-cols-2 gap-4 md:grid-cols-4">
+          {[
+            { label: "AI tools ready", value: TOOLS.filter((t) => t.status === "ready").length },
+            { label: "Languages supported", value: 12 },
+            { label: "Backend frameworks", value: 6 },
+            { label: "Utilities included", value: 3 },
+          ].map((c) => (
+            <div key={c.label} className="rounded-3xl border border-border/60 bg-card/70 p-5 text-center shadow-sm backdrop-blur-sm">
+              <div className="bg-gradient-to-br from-indigo-500 to-fuchsia-500 bg-clip-text text-3xl font-semibold text-transparent">
+                <AnimatedNumber value={c.value} />+
+              </div>
+              <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
+                {c.label}
+              </div>
+            </div>
+          ))}
+        </section>
+
+        {/* FAQ */}
+        <section className="mb-14">
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Frequently asked questions
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Everything about AI code generation, review, bug fixing, SQL, APIs, and more.
+            </p>
+          </div>
+          <div className="rounded-3xl border border-border/60 bg-card/70 px-6 py-2 shadow-sm backdrop-blur-sm">
+            <Accordion type="single" collapsible className="w-full">
+              {FAQ.map((f, i) => (
+                <AccordionItem key={f.q} value={`q-${i}`}>
+                  <AccordionTrigger className="text-left text-sm font-medium">
+                    {f.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground">
+                    {f.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="mb-6">
+          <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-600 p-8 text-white shadow-lg sm:p-12">
+            <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
+            <h3 className="max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl">
+              Ready to ship faster? Start generating code with AI now.
+            </h3>
+            <p className="mt-2 max-w-xl text-sm text-white/80">
+              Free to try. No installation. Your history stays private in your browser.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Link
+                to="/tools/code-generator"
+                className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-2.5 text-sm font-medium text-slate-900 shadow transition hover:opacity-95"
+              >
+                <Sparkles className="h-4 w-4" /> Open Code Generator
+              </Link>
+              <Link
+                to="/tools/api-generator"
+                className="inline-flex items-center gap-2 rounded-2xl border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:bg-white/20"
+              >
+                <TerminalSquare className="h-4 w-4" /> Generate an API
+              </Link>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <SiteFooter />
     </div>
   );
 }
+
+// Re-export FAQ for JSON-LD (defined before Route via hoisting? Not hoisted since const).
