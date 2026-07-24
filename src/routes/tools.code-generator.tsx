@@ -21,7 +21,8 @@ import {
 import { findTool } from "@/features/tools/registry";
 import { generateCode } from "@/lib/ai.functions";
 import { useHistory } from "@/features/history/useHistory";
-import { Sparkles, RefreshCw } from "lucide-react";
+import { useToolPreferences } from "@/features/preferences/useToolPreferences";
+import { Sparkles, RefreshCw, RotateCcw } from "lucide-react";
 
 const LANGS = ["JavaScript", "TypeScript", "Python", "Java", "Go", "Rust", "C++", "C#", "PHP", "Ruby", "Swift", "Kotlin"];
 const DIFFICULTIES = ["Beginner", "Intermediate", "Advanced", "Expert"];
@@ -42,11 +43,14 @@ export const Route = createFileRoute("/tools/code-generator")({
 function Page() {
   const tool = findTool("code-generator")!;
   const { add } = useHistory();
-  const [language, setLanguage] = useState("TypeScript");
-  const [difficulty, setDifficulty] = useState("Intermediate");
-  const [framework, setFramework] = useState("");
-  const [style, setStyle] = useState("Idiomatic");
-  const [comments, setComments] = useState(true);
+  const { prefs, set, reset } = useToolPreferences("code-generator", {
+    language: "TypeScript",
+    difficulty: "Intermediate",
+    framework: "",
+    style: "Idiomatic",
+    comments: true,
+  });
+  const { language, difficulty, framework, style, comments } = prefs;
   const [prompt, setPrompt] = useState("");
 
   const mutation = useMutation({
