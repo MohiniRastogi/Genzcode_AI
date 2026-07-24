@@ -17,10 +17,15 @@ import { Route as UtilitiesJwtDecoderRouteImport } from './routes/utilities.jwt-
 import { Route as UtilitiesJsonFormatterRouteImport } from './routes/utilities.json-formatter'
 import { Route as UtilitiesBase64RouteImport } from './routes/utilities.base64'
 import { Route as UtilitiesSlugRouteImport } from './routes/utilities.$slug'
+import { Route as ToolsSqlGeneratorRouteImport } from './routes/tools.sql-generator'
+import { Route as ToolsRegexGeneratorRouteImport } from './routes/tools.regex-generator'
+import { Route as ToolsReadmeGeneratorRouteImport } from './routes/tools.readme-generator'
+import { Route as ToolsDocumentationGeneratorRouteImport } from './routes/tools.documentation-generator'
 import { Route as ToolsCodeReviewerRouteImport } from './routes/tools.code-reviewer'
 import { Route as ToolsCodeGeneratorRouteImport } from './routes/tools.code-generator'
 import { Route as ToolsCodeConverterRouteImport } from './routes/tools.code-converter'
 import { Route as ToolsBugSolverRouteImport } from './routes/tools.bug-solver'
+import { Route as ToolsApiGeneratorRouteImport } from './routes/tools.api-generator'
 import { Route as ToolsSlugRouteImport } from './routes/tools.$slug'
 
 const SettingsRoute = SettingsRouteImport.update({
@@ -63,6 +68,27 @@ const UtilitiesSlugRoute = UtilitiesSlugRouteImport.update({
   path: '/utilities/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsSqlGeneratorRoute = ToolsSqlGeneratorRouteImport.update({
+  id: '/tools/sql-generator',
+  path: '/tools/sql-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRegexGeneratorRoute = ToolsRegexGeneratorRouteImport.update({
+  id: '/tools/regex-generator',
+  path: '/tools/regex-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsReadmeGeneratorRoute = ToolsReadmeGeneratorRouteImport.update({
+  id: '/tools/readme-generator',
+  path: '/tools/readme-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsDocumentationGeneratorRoute =
+  ToolsDocumentationGeneratorRouteImport.update({
+    id: '/tools/documentation-generator',
+    path: '/tools/documentation-generator',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ToolsCodeReviewerRoute = ToolsCodeReviewerRouteImport.update({
   id: '/tools/code-reviewer',
   path: '/tools/code-reviewer',
@@ -83,6 +109,11 @@ const ToolsBugSolverRoute = ToolsBugSolverRouteImport.update({
   path: '/tools/bug-solver',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsApiGeneratorRoute = ToolsApiGeneratorRouteImport.update({
+  id: '/tools/api-generator',
+  path: '/tools/api-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsSlugRoute = ToolsSlugRouteImport.update({
   id: '/tools/$slug',
   path: '/tools/$slug',
@@ -95,10 +126,15 @@ export interface FileRoutesByFullPath {
   '/history': typeof HistoryRoute
   '/settings': typeof SettingsRoute
   '/tools/$slug': typeof ToolsSlugRoute
+  '/tools/api-generator': typeof ToolsApiGeneratorRoute
   '/tools/bug-solver': typeof ToolsBugSolverRoute
   '/tools/code-converter': typeof ToolsCodeConverterRoute
   '/tools/code-generator': typeof ToolsCodeGeneratorRoute
   '/tools/code-reviewer': typeof ToolsCodeReviewerRoute
+  '/tools/documentation-generator': typeof ToolsDocumentationGeneratorRoute
+  '/tools/readme-generator': typeof ToolsReadmeGeneratorRoute
+  '/tools/regex-generator': typeof ToolsRegexGeneratorRoute
+  '/tools/sql-generator': typeof ToolsSqlGeneratorRoute
   '/utilities/$slug': typeof UtilitiesSlugRoute
   '/utilities/base64': typeof UtilitiesBase64Route
   '/utilities/json-formatter': typeof UtilitiesJsonFormatterRoute
@@ -110,10 +146,15 @@ export interface FileRoutesByTo {
   '/history': typeof HistoryRoute
   '/settings': typeof SettingsRoute
   '/tools/$slug': typeof ToolsSlugRoute
+  '/tools/api-generator': typeof ToolsApiGeneratorRoute
   '/tools/bug-solver': typeof ToolsBugSolverRoute
   '/tools/code-converter': typeof ToolsCodeConverterRoute
   '/tools/code-generator': typeof ToolsCodeGeneratorRoute
   '/tools/code-reviewer': typeof ToolsCodeReviewerRoute
+  '/tools/documentation-generator': typeof ToolsDocumentationGeneratorRoute
+  '/tools/readme-generator': typeof ToolsReadmeGeneratorRoute
+  '/tools/regex-generator': typeof ToolsRegexGeneratorRoute
+  '/tools/sql-generator': typeof ToolsSqlGeneratorRoute
   '/utilities/$slug': typeof UtilitiesSlugRoute
   '/utilities/base64': typeof UtilitiesBase64Route
   '/utilities/json-formatter': typeof UtilitiesJsonFormatterRoute
@@ -126,10 +167,15 @@ export interface FileRoutesById {
   '/history': typeof HistoryRoute
   '/settings': typeof SettingsRoute
   '/tools/$slug': typeof ToolsSlugRoute
+  '/tools/api-generator': typeof ToolsApiGeneratorRoute
   '/tools/bug-solver': typeof ToolsBugSolverRoute
   '/tools/code-converter': typeof ToolsCodeConverterRoute
   '/tools/code-generator': typeof ToolsCodeGeneratorRoute
   '/tools/code-reviewer': typeof ToolsCodeReviewerRoute
+  '/tools/documentation-generator': typeof ToolsDocumentationGeneratorRoute
+  '/tools/readme-generator': typeof ToolsReadmeGeneratorRoute
+  '/tools/regex-generator': typeof ToolsRegexGeneratorRoute
+  '/tools/sql-generator': typeof ToolsSqlGeneratorRoute
   '/utilities/$slug': typeof UtilitiesSlugRoute
   '/utilities/base64': typeof UtilitiesBase64Route
   '/utilities/json-formatter': typeof UtilitiesJsonFormatterRoute
@@ -143,10 +189,15 @@ export interface FileRouteTypes {
     | '/history'
     | '/settings'
     | '/tools/$slug'
+    | '/tools/api-generator'
     | '/tools/bug-solver'
     | '/tools/code-converter'
     | '/tools/code-generator'
     | '/tools/code-reviewer'
+    | '/tools/documentation-generator'
+    | '/tools/readme-generator'
+    | '/tools/regex-generator'
+    | '/tools/sql-generator'
     | '/utilities/$slug'
     | '/utilities/base64'
     | '/utilities/json-formatter'
@@ -158,10 +209,15 @@ export interface FileRouteTypes {
     | '/history'
     | '/settings'
     | '/tools/$slug'
+    | '/tools/api-generator'
     | '/tools/bug-solver'
     | '/tools/code-converter'
     | '/tools/code-generator'
     | '/tools/code-reviewer'
+    | '/tools/documentation-generator'
+    | '/tools/readme-generator'
+    | '/tools/regex-generator'
+    | '/tools/sql-generator'
     | '/utilities/$slug'
     | '/utilities/base64'
     | '/utilities/json-formatter'
@@ -173,10 +229,15 @@ export interface FileRouteTypes {
     | '/history'
     | '/settings'
     | '/tools/$slug'
+    | '/tools/api-generator'
     | '/tools/bug-solver'
     | '/tools/code-converter'
     | '/tools/code-generator'
     | '/tools/code-reviewer'
+    | '/tools/documentation-generator'
+    | '/tools/readme-generator'
+    | '/tools/regex-generator'
+    | '/tools/sql-generator'
     | '/utilities/$slug'
     | '/utilities/base64'
     | '/utilities/json-formatter'
@@ -189,10 +250,15 @@ export interface RootRouteChildren {
   HistoryRoute: typeof HistoryRoute
   SettingsRoute: typeof SettingsRoute
   ToolsSlugRoute: typeof ToolsSlugRoute
+  ToolsApiGeneratorRoute: typeof ToolsApiGeneratorRoute
   ToolsBugSolverRoute: typeof ToolsBugSolverRoute
   ToolsCodeConverterRoute: typeof ToolsCodeConverterRoute
   ToolsCodeGeneratorRoute: typeof ToolsCodeGeneratorRoute
   ToolsCodeReviewerRoute: typeof ToolsCodeReviewerRoute
+  ToolsDocumentationGeneratorRoute: typeof ToolsDocumentationGeneratorRoute
+  ToolsReadmeGeneratorRoute: typeof ToolsReadmeGeneratorRoute
+  ToolsRegexGeneratorRoute: typeof ToolsRegexGeneratorRoute
+  ToolsSqlGeneratorRoute: typeof ToolsSqlGeneratorRoute
   UtilitiesSlugRoute: typeof UtilitiesSlugRoute
   UtilitiesBase64Route: typeof UtilitiesBase64Route
   UtilitiesJsonFormatterRoute: typeof UtilitiesJsonFormatterRoute
@@ -257,6 +323,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UtilitiesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/sql-generator': {
+      id: '/tools/sql-generator'
+      path: '/tools/sql-generator'
+      fullPath: '/tools/sql-generator'
+      preLoaderRoute: typeof ToolsSqlGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/regex-generator': {
+      id: '/tools/regex-generator'
+      path: '/tools/regex-generator'
+      fullPath: '/tools/regex-generator'
+      preLoaderRoute: typeof ToolsRegexGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/readme-generator': {
+      id: '/tools/readme-generator'
+      path: '/tools/readme-generator'
+      fullPath: '/tools/readme-generator'
+      preLoaderRoute: typeof ToolsReadmeGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/documentation-generator': {
+      id: '/tools/documentation-generator'
+      path: '/tools/documentation-generator'
+      fullPath: '/tools/documentation-generator'
+      preLoaderRoute: typeof ToolsDocumentationGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/code-reviewer': {
       id: '/tools/code-reviewer'
       path: '/tools/code-reviewer'
@@ -285,6 +379,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsBugSolverRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/api-generator': {
+      id: '/tools/api-generator'
+      path: '/tools/api-generator'
+      fullPath: '/tools/api-generator'
+      preLoaderRoute: typeof ToolsApiGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/$slug': {
       id: '/tools/$slug'
       path: '/tools/$slug'
@@ -301,10 +402,15 @@ const rootRouteChildren: RootRouteChildren = {
   HistoryRoute: HistoryRoute,
   SettingsRoute: SettingsRoute,
   ToolsSlugRoute: ToolsSlugRoute,
+  ToolsApiGeneratorRoute: ToolsApiGeneratorRoute,
   ToolsBugSolverRoute: ToolsBugSolverRoute,
   ToolsCodeConverterRoute: ToolsCodeConverterRoute,
   ToolsCodeGeneratorRoute: ToolsCodeGeneratorRoute,
   ToolsCodeReviewerRoute: ToolsCodeReviewerRoute,
+  ToolsDocumentationGeneratorRoute: ToolsDocumentationGeneratorRoute,
+  ToolsReadmeGeneratorRoute: ToolsReadmeGeneratorRoute,
+  ToolsRegexGeneratorRoute: ToolsRegexGeneratorRoute,
+  ToolsSqlGeneratorRoute: ToolsSqlGeneratorRoute,
   UtilitiesSlugRoute: UtilitiesSlugRoute,
   UtilitiesBase64Route: UtilitiesBase64Route,
   UtilitiesJsonFormatterRoute: UtilitiesJsonFormatterRoute,
