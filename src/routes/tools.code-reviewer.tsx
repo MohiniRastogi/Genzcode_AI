@@ -15,7 +15,8 @@ import {
 import { findTool } from "@/features/tools/registry";
 import { reviewCode } from "@/lib/ai.functions";
 import { useHistory } from "@/features/history/useHistory";
-import { ShieldCheck, RefreshCw } from "lucide-react";
+import { useToolPreferences } from "@/features/preferences/useToolPreferences";
+import { ShieldCheck, RefreshCw, RotateCcw } from "lucide-react";
 
 const LANGS = ["auto", "JavaScript", "TypeScript", "Python", "Java", "Go", "Rust", "C++", "C#", "PHP"];
 
@@ -35,7 +36,8 @@ function Page() {
   const tool = findTool("code-reviewer")!;
   const { add } = useHistory();
   const [code, setCode] = useState("");
-  const [language, setLanguage] = useState("auto");
+  const { prefs, set, reset } = useToolPreferences("code-reviewer", { language: "auto" });
+  const { language } = prefs;
 
   const mutation = useMutation({
     mutationFn: async () => reviewCode({ data: { code, language } }),
@@ -54,9 +56,15 @@ function Page() {
     <ToolPage tool={tool}>
       <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
         <div className="space-y-4 rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground">Preferences auto-save</span>
+            <Button variant="ghost" size="sm" className="h-7 gap-1 text-xs" onClick={reset}>
+              <RotateCcw className="h-3 w-3" /> Reset
+            </Button>
+          </div>
           <div>
             <Label className="text-xs">Language</Label>
-            <Select value={language} onValueChange={setLanguage}>
+            <Select value={language} onValueChange={(v) => set("language", v)}>
               <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
               <SelectContent>
                 {LANGS.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}
