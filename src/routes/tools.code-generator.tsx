@@ -73,10 +73,16 @@ function Page() {
     <ToolPage tool={tool}>
       <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
         <div className="space-y-4 rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground">Preferences auto-save</span>
+            <Button variant="ghost" size="sm" className="h-7 gap-1 text-xs" onClick={reset}>
+              <RotateCcw className="h-3 w-3" /> Reset
+            </Button>
+          </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
               <Label className="text-xs">Language</Label>
-              <Select value={language} onValueChange={setLanguage}>
+              <Select value={language} onValueChange={(v) => set("language", v)}>
                 <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {LANGS.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}
@@ -85,7 +91,7 @@ function Page() {
             </div>
             <div>
               <Label className="text-xs">Difficulty</Label>
-              <Select value={difficulty} onValueChange={setDifficulty}>
+              <Select value={difficulty} onValueChange={(v) => set("difficulty", v)}>
                 <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {DIFFICULTIES.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}
@@ -99,12 +105,12 @@ function Page() {
               className="mt-1"
               placeholder="e.g. React, FastAPI, Spring"
               value={framework}
-              onChange={(e) => setFramework(e.target.value)}
+              onChange={(e) => set("framework", e.target.value)}
             />
           </div>
           <div>
             <Label className="text-xs">Code Style</Label>
-            <Select value={style} onValueChange={setStyle}>
+            <Select value={style} onValueChange={(v) => set("style", v)}>
               <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
               <SelectContent>
                 {STYLES.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}
@@ -113,7 +119,7 @@ function Page() {
           </div>
           <div className="flex items-center justify-between rounded-2xl border border-border/60 px-3 py-2">
             <Label htmlFor="comments" className="text-xs">Include comments</Label>
-            <Switch id="comments" checked={comments} onCheckedChange={setComments} />
+            <Switch id="comments" checked={comments} onCheckedChange={(v) => set("comments", v)} />
           </div>
           <div>
             <Label className="text-xs">Prompt</Label>
