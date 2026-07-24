@@ -15,7 +15,8 @@ import {
 import { findTool } from "@/features/tools/registry";
 import { convertCode } from "@/lib/ai.functions";
 import { useHistory } from "@/features/history/useHistory";
-import { GitCompare, RefreshCw } from "lucide-react";
+import { useToolPreferences } from "@/features/preferences/useToolPreferences";
+import { GitCompare, RefreshCw, RotateCcw } from "lucide-react";
 
 const LANGS = ["Python", "Java", "JavaScript", "TypeScript", "Go", "Rust", "PHP", "C", "C++", "Swift", "Kotlin", "Ruby", "C#"];
 
@@ -35,8 +36,11 @@ function Page() {
   const tool = findTool("code-converter")!;
   const { add } = useHistory();
   const [code, setCode] = useState("");
-  const [from, setFrom] = useState("Python");
-  const [to, setTo] = useState("TypeScript");
+  const { prefs, set, reset } = useToolPreferences("code-converter", {
+    from: "Python",
+    to: "TypeScript",
+  });
+  const { from, to } = prefs;
 
   const mutation = useMutation({
     mutationFn: async () => convertCode({ data: { code, from, to } }),
@@ -55,10 +59,16 @@ function Page() {
     <ToolPage tool={tool}>
       <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
         <div className="space-y-4 rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground">Preferences auto-save</span>
+            <Button variant="ghost" size="sm" className="h-7 gap-1 text-xs" onClick={reset}>
+              <RotateCcw className="h-3 w-3" /> Reset
+            </Button>
+          </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
               <Label className="text-xs">From</Label>
-              <Select value={from} onValueChange={setFrom}>
+              <Select value={from} onValueChange={(v) => set("from", v)}>
                 <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {LANGS.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}
@@ -67,7 +77,7 @@ function Page() {
             </div>
             <div>
               <Label className="text-xs">To</Label>
-              <Select value={to} onValueChange={setTo}>
+              <Select value={to} onValueChange={(v) => set("to", v)}>
                 <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {LANGS.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}

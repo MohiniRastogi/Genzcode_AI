@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useHistory } from "@/features/history/useHistory";
-import { Trash2, Info } from "lucide-react";
+import { clearAllToolPreferences } from "@/features/preferences/useToolPreferences";
+import { Trash2, Info, SlidersHorizontal } from "lucide-react";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({
@@ -37,6 +38,27 @@ function SettingsPage() {
             }}
           >
             <Trash2 className="h-4 w-4" /> Clear all history
+          </Button>
+        </div>
+        <div className="rounded-3xl border border-border/60 bg-card/70 p-5 backdrop-blur-sm">
+          <h2 className="flex items-center gap-2 text-sm font-semibold">
+            <SlidersHorizontal className="h-4 w-4" /> Tool preferences
+          </h2>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Each AI tool remembers its own defaults — language, difficulty, framework, code style.
+            Change them on any tool page and they auto-save for next time. Use Reset on a tool
+            to restore just that tool, or clear everything here.
+          </p>
+          <Button
+            variant="outline"
+            size="sm"
+            className="mt-4"
+            onClick={() => {
+              clearAllToolPreferences();
+              toast.success("Tool preferences cleared");
+            }}
+          >
+            <Trash2 className="h-4 w-4" /> Clear all tool preferences
           </Button>
         </div>
         <div className="flex items-start gap-3 rounded-3xl border border-border/60 bg-card/70 p-5 backdrop-blur-sm">
