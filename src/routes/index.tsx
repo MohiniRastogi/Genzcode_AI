@@ -122,54 +122,140 @@ export const Route = createFileRoute("/")({
   component: Dashboard,
 });
 
-const POPULAR_SEARCHES: { label: string; to: string; fill?: string }[] = [
-  { label: "How to generate Python code", to: "/tools/code-generator" },
-  { label: "Fix JavaScript bugs", to: "/tools/bug-solver" },
-  { label: "Create SQL queries", to: "/tools/sql-generator" },
-  { label: "Generate REST API", to: "/tools/api-generator" },
-  { label: "Generate Express API", to: "/tools/api-generator" },
-  { label: "Generate Regex", to: "/tools/regex-generator" },
-  { label: "Generate README", to: "/tools/readme-generator" },
-  { label: "Convert Java to Python", to: "/tools/code-converter" },
-  { label: "Convert HTML to JSX", to: "/tools/code-converter" },
-  { label: "Review React code", to: "/tools/code-reviewer" },
-  { label: "Generate Dockerfile", to: "/tools/code-generator" },
-  { label: "Generate Tailwind CSS", to: "/tools/code-generator" },
-  { label: "Create JWT token", to: "/utilities/jwt-decoder" },
-  { label: "Decode JWT", to: "/utilities/jwt-decoder" },
+const POPULAR_TASKS: { label: string; to: string }[] = [
+  { label: "Generate a Python function", to: "/tools/code-generator" },
+  { label: "Build a React component", to: "/tools/code-generator" },
+  { label: "Create an Express API", to: "/tools/api-generator" },
+  { label: "Fix a JavaScript error", to: "/tools/bug-solver" },
+  { label: "Review an SQL query", to: "/tools/code-reviewer" },
+  { label: "Generate a README", to: "/tools/readme-generator" },
+  { label: "Generate a Regex", to: "/tools/regex-generator" },
+  { label: "Write documentation", to: "/tools/documentation-generator" },
+  { label: "Create a JWT", to: "/utilities/jwt-decoder" },
   { label: "Format JSON", to: "/utilities/json-formatter" },
-  { label: "Encode Base64", to: "/utilities/base64" },
-  { label: "Decode Base64", to: "/utilities/base64" },
-  { label: "Generate Git commands", to: "/tools/code-generator" },
+  { label: "Convert Java to Python", to: "/tools/code-converter" },
+  { label: "Optimize an SQL query", to: "/tools/sql-generator" },
 ];
 
-const PLATFORM_FEATURES = [
-  { icon: Wand2, title: "Generate production-ready code", desc: "Ship features faster with AI-generated code across 12+ languages.", grad: "from-indigo-500 to-violet-500" },
-  { icon: ShieldCheck, title: "Review code with AI", desc: "Automated review with scores, bugs, dead code and refactor suggestions.", grad: "from-emerald-500 to-teal-500" },
-  { icon: Bug, title: "Fix programming bugs", desc: "Detect syntax, logic and runtime errors and get a fixed version instantly.", grad: "from-rose-500 to-red-500" },
-  { icon: GitCompare, title: "Convert programming languages", desc: "Translate code across JavaScript, Python, Java, Go, Rust and more.", grad: "from-orange-500 to-amber-500" },
-  { icon: TerminalSquare, title: "Generate APIs", desc: "Express, FastAPI, Flask, Django or Spring Boot — with auth, CRUD, Swagger.", grad: "from-fuchsia-500 to-pink-500" },
-  { icon: Database, title: "Generate SQL", desc: "Natural-language queries with optimization notes across popular dialects.", grad: "from-cyan-500 to-sky-500" },
-  { icon: Regex, title: "Generate Regex", desc: "Explained patterns with a live tester and match highlighting.", grad: "from-violet-500 to-purple-500" },
-  { icon: BookOpen, title: "Generate Documentation", desc: "Markdown, HTML, JSDoc, Python docstrings and Javadoc.", grad: "from-sky-500 to-blue-500" },
-  { icon: FileText, title: "Generate README", desc: "Professional READMEs with badges, install, usage and screenshots.", grad: "from-lime-500 to-emerald-500" },
+const TRUST_BADGES = [
+  { icon: Globe, label: "100+ programming languages" },
+  { icon: Sparkles, label: "AI-powered workflows" },
+  { icon: Zap, label: "Fast streaming responses" },
+  { icon: Lock, label: "Secure browser workspace" },
+  { icon: Rocket, label: "No installation required" },
 ];
 
-const BUILD_CARDS = [
-  { icon: Globe, title: "Web Applications", items: ["React", "Next.js", "Angular", "Vue"], grad: "from-indigo-500 to-blue-500" },
-  { icon: TerminalSquare, title: "Backend APIs", items: ["Node.js", "Python", "Java", "PHP", "Go"], grad: "from-fuchsia-500 to-pink-500" },
-  { icon: Rocket, title: "Mobile Apps", items: ["Flutter", "React Native", "Swift", "Kotlin"], grad: "from-rose-500 to-red-500" },
-  { icon: Database, title: "Databases", items: ["MySQL", "PostgreSQL", "MongoDB", "SQLite"], grad: "from-cyan-500 to-sky-500" },
-  { icon: Layers, title: "Developer Utilities", items: ["JWT", "JSON", "Regex", "Base64"], grad: "from-emerald-500 to-teal-500" },
+const SOLUTIONS = [
+  {
+    icon: BookOpen,
+    title: "For students",
+    desc: "Learn programming faster with clear AI explanations, worked examples in Python or JavaScript, and step-by-step algorithm walkthroughs.",
+    cta: "Explain code with AI",
+    to: "/tools/code-generator",
+    grad: "from-indigo-500 to-violet-500",
+  },
+  {
+    icon: Code2,
+    title: "For developers",
+    desc: "Ship production-ready React, Node.js and Django code, scaffold REST APIs, generate SQL and keep technical documentation in sync.",
+    cta: "Generate an API",
+    to: "/tools/api-generator",
+    grad: "from-fuchsia-500 to-pink-500",
+  },
+  {
+    icon: Rocket,
+    title: "For freelancers",
+    desc: "Automate the repetitive parts of client work — convert code between languages, generate READMEs and deliver projects on time.",
+    cta: "Convert a language",
+    to: "/tools/code-converter",
+    grad: "from-orange-500 to-amber-500",
+  },
+  {
+    icon: Layers,
+    title: "For teams",
+    desc: "Standardize technical documentation, keep READMEs current, and raise code quality with consistent AI-assisted reviews.",
+    cta: "Review code with AI",
+    to: "/tools/code-reviewer",
+    grad: "from-emerald-500 to-teal-500",
+  },
+];
+
+const TECH_STACK: { group: string; items: { label: string; to: string }[]; grad: string }[] = [
+  {
+    group: "Languages",
+    grad: "from-indigo-500 to-violet-500",
+    items: [
+      { label: "Python", to: "/tools/code-generator" },
+      { label: "JavaScript", to: "/tools/code-generator" },
+      { label: "TypeScript", to: "/tools/code-generator" },
+      { label: "Java", to: "/tools/code-converter" },
+      { label: "C++", to: "/tools/code-generator" },
+      { label: "C#", to: "/tools/code-generator" },
+      { label: "Go", to: "/tools/code-converter" },
+      { label: "Rust", to: "/tools/code-converter" },
+      { label: "PHP", to: "/tools/code-generator" },
+      { label: "Ruby", to: "/tools/code-generator" },
+      { label: "Swift", to: "/tools/code-generator" },
+      { label: "Kotlin", to: "/tools/code-generator" },
+    ],
+  },
+  {
+    group: "Frameworks",
+    grad: "from-fuchsia-500 to-pink-500",
+    items: [
+      { label: "React", to: "/tools/code-generator" },
+      { label: "Next.js", to: "/tools/code-generator" },
+      { label: "Angular", to: "/tools/code-generator" },
+      { label: "Vue", to: "/tools/code-generator" },
+      { label: "Express", to: "/tools/api-generator" },
+      { label: "FastAPI", to: "/tools/api-generator" },
+      { label: "Flask", to: "/tools/api-generator" },
+      { label: "Django", to: "/tools/api-generator" },
+      { label: "Spring Boot", to: "/tools/api-generator" },
+    ],
+  },
+  {
+    group: "Databases",
+    grad: "from-cyan-500 to-sky-500",
+    items: [
+      { label: "MySQL", to: "/tools/sql-generator" },
+      { label: "PostgreSQL", to: "/tools/sql-generator" },
+      { label: "MongoDB", to: "/tools/sql-generator" },
+      { label: "SQLite", to: "/tools/sql-generator" },
+    ],
+  },
+  {
+    group: "Utilities",
+    grad: "from-emerald-500 to-teal-500",
+    items: [
+      { label: "JSON", to: "/utilities/json-formatter" },
+      { label: "JWT", to: "/utilities/jwt-decoder" },
+      { label: "Base64", to: "/utilities/base64" },
+      { label: "Regex", to: "/tools/regex-generator" },
+      { label: "Markdown", to: "/tools/documentation-generator" },
+      { label: "REST API", to: "/tools/api-generator" },
+    ],
+  },
+];
+
+const USE_CASES = [
+  { icon: Globe, title: "Web development", desc: "Ship React, Next.js and Vue interfaces with AI-generated components, hooks and utility functions.", grad: "from-indigo-500 to-blue-500" },
+  { icon: TerminalSquare, title: "Backend development", desc: "Design Node.js, Django, FastAPI and Spring Boot services with clean, testable REST endpoints.", grad: "from-fuchsia-500 to-pink-500" },
+  { icon: Database, title: "Database queries", desc: "Turn plain English into optimized PostgreSQL, MySQL, SQLite or MongoDB queries in seconds.", grad: "from-cyan-500 to-sky-500" },
+  { icon: BookOpen, title: "Technical documentation", desc: "Auto-generate Markdown docs, JSDoc and Python docstrings directly from your source.", grad: "from-sky-500 to-blue-500" },
+  { icon: Code2, title: "API development", desc: "Scaffold REST APIs with authentication, JWT, validation and Swagger definitions on demand.", grad: "from-violet-500 to-purple-500" },
+  { icon: Sparkles, title: "Learning programming", desc: "Read AI explanations of unfamiliar snippets and study idiomatic patterns for each language.", grad: "from-amber-500 to-orange-500" },
+  { icon: Wand2, title: "Interview preparation", desc: "Practice algorithm problems with complexity notes and cross-language conversions.", grad: "from-rose-500 to-red-500" },
+  { icon: Rocket, title: "Automation scripts", desc: "Generate Bash, Python and Node.js scripts to replace repetitive terminal work.", grad: "from-emerald-500 to-teal-500" },
 ];
 
 const WHY_CARDS = [
-  { icon: Zap, title: "Fast AI generation", desc: "Millisecond streaming responses powered by the Lovable AI Gateway." },
-  { icon: ShieldCheck, title: "Professional output", desc: "Structured, sectioned results ready to copy into real projects." },
-  { icon: Globe, title: "Multiple languages", desc: "From JavaScript and Python to Go, Rust, Kotlin and Swift." },
-  { icon: Lock, title: "Secure by design", desc: "Your prompts never train external models — history stays on your device." },
-  { icon: Rocket, title: "No installation", desc: "Runs entirely in the browser — nothing to set up or configure." },
-  { icon: Layers, title: "One unified dashboard", desc: "History, favorites, utilities and settings all in one workspace." },
+  { icon: Zap, title: "Speed", desc: "AI-assisted development removes boilerplate so features ship in hours, not days." },
+  { icon: ShieldCheck, title: "Accuracy", desc: "Structured, reviewed output with consistent formatting across every language." },
+  { icon: Rocket, title: "Productivity", desc: "Move from idea to running implementation without switching between tools." },
+  { icon: BookOpen, title: "Learning", desc: "Understand unfamiliar code and frameworks with clear, contextual explanations." },
+  { icon: Layers, title: "Organization", desc: "Auto-generate READMEs and documentation to keep every project tidy." },
+  { icon: Sparkles, title: "Developer experience", desc: "One clean workspace for generation, review, conversion, SQL, regex and APIs." },
 ];
 
 const HOW_STEPS = [
@@ -180,18 +266,18 @@ const HOW_STEPS = [
 ];
 
 const FAQ: { q: string; a: string }[] = [
-  { q: "What is an AI Code Generator?", a: "An AI Code Generator turns natural-language prompts into working code. CodeMateAI supports 12+ languages and generates complete, explained snippets with algorithm, complexity and edge-case analysis." },
-  { q: "How does AI Code Review work?", a: "You paste your code, and the AI scores it across quality, readability, performance, security and best-practices — surfacing bugs, dead code and a corrected version." },
-  { q: "Why should I use CodeMateAI?", a: "CodeMateAI unifies the entire AI development workflow — generation, review, debugging, conversion and documentation — into one polished workspace so you spend less time context-switching." },
-  { q: "Can AI generate SQL queries?", a: "Yes — describe what you need in plain English and CodeMateAI produces optimized SQL for PostgreSQL, MySQL, SQLite or SQL Server, along with explanation and an assumed schema." },
-  { q: "Can AI generate APIs?", a: "Yes. The API Generator scaffolds Express, FastAPI, Flask, Django or Spring Boot APIs with authentication, CRUD, validation, pagination, Swagger and a Postman collection." },
-  { q: "Can AI create Regex?", a: "The Regex Generator returns a bulletproof pattern with a token-by-token explanation and a live tester so you can validate against your own sample input." },
-  { q: "Can AI generate documentation?", a: "Yes — generate API, function, class or project docs in Markdown, HTML, JSDoc, Python docstrings or Javadoc, straight from your source code." },
-  { q: "Is CodeMateAI free to use?", a: "The core tools are free to use. Usage is subject to the Lovable AI Gateway's monthly allowance; heavy usage may require adding credits to your workspace." },
-  { q: "Can AI convert programming languages?", a: "Yes. The Code Converter translates between languages while preserving semantics and highlighting syntax differences and performance trade-offs." },
-  { q: "Which languages are supported?", a: "JavaScript, TypeScript, Python, Java, Go, Rust, C++, C#, PHP, Ruby, Swift and Kotlin, plus frameworks like React, Next.js, FastAPI, Django and Spring Boot." },
-  { q: "How accurate is AI code generation?", a: "Results are high quality for common tasks and always come with explanations and complexity notes — treat them as a strong starting point and review before shipping to production." },
-  { q: "Is my code secure?", a: "Prompts are sent to the AI gateway only for the current request. History and favorites are stored locally in your browser — not on our servers." },
+  { q: "What is CodeMateAI?", a: "CodeMateAI is an AI coding workspace that helps you generate, review, debug and document code from your browser. You describe a task in plain English, pick a tool — code generator, bug solver, SQL, regex, API or documentation — and get a structured, syntax-highlighted result you can drop straight into your project." },
+  { q: "Who is CodeMateAI for?", a: "It's built for students learning to code, developers shipping production apps, freelancers juggling client work, and teams that want consistent documentation and code quality. If you write JavaScript, Python, TypeScript, Java, Go or SQL on a regular basis, CodeMateAI takes care of the repetitive parts so you can focus on the interesting problems." },
+  { q: "Why should developers use an AI coding assistant?", a: "A good AI assistant handles the boring 20% of software work — boilerplate, docstrings, sample data, SQL joins — so you can spend more time on architecture and product decisions. It also shortens the loop between an idea and a working prototype, which usually means shipping features and fixing bugs noticeably faster." },
+  { q: "How does AI help software development?", a: "AI turns natural-language descriptions into working code, explains unfamiliar files, suggests refactors and catches obvious bugs during review. Used well, it acts like a patient pair-programmer: quick to draft a first version, quick to explain trade-offs, and always available when you're stuck on something outside your usual stack." },
+  { q: "How can AI help you write documentation?", a: "CodeMateAI reads your source and produces Markdown docs, JSDoc comments, Python docstrings or Javadoc that match what the code actually does. It's especially useful for README files, API references and onboarding notes — the writing tasks most teams skip because they're time-consuming rather than technically hard." },
+  { q: "How can AI generate SQL from plain English?", a: "You describe the result you want — 'top 10 customers by revenue this quarter' — and the SQL generator produces a query for PostgreSQL, MySQL, SQLite or SQL Server, along with an assumed schema and a short explanation. You can tweak the prompt, compare dialects, and paste the query straight into your database client." },
+  { q: "How can AI generate REST APIs?", a: "The API generator scaffolds Express, FastAPI, Flask, Django or Spring Boot services with routes, validation, JWT authentication, pagination and Swagger definitions. You describe the resource you need, choose a framework, and get a working starting point plus a Postman collection — no need to remember every idiomatic pattern per stack." },
+  { q: "How does AI review code?", a: "You paste a file or diff and the reviewer scores it across readability, performance, security and best practices. It highlights bugs, dead code and risky patterns, then suggests a cleaner version. It won't replace a senior review, but it's a solid first pass that catches the obvious issues before they hit a pull request." },
+  { q: "Can AI convert code between programming languages?", a: "Yes — the converter translates between JavaScript, TypeScript, Python, Java, Go, Rust, C#, PHP and more while preserving behavior. It also flags where the target language differs, so you know when a Pythonic list comprehension becomes a Java stream or when Go's error handling replaces a JavaScript try/catch." },
+  { q: "Is CodeMateAI free to use?", a: "The core tools are free while you're getting started. Usage is metered through the Lovable AI Gateway's monthly allowance, so heavier workloads may need extra credits added to your workspace. There's no installation, no separate account to manage, and nothing to configure before you run your first prompt." },
+  { q: "Is my code kept private?", a: "Your prompts are sent to the AI gateway only to answer the current request — nothing is used to train external models. Your history and favorites stay in local browser storage, not on a server, so you can clear them at any time from Settings without leaving a trace behind." },
+  { q: "Which languages and frameworks are supported?", a: "CodeMateAI works with mainstream languages including Python, JavaScript, TypeScript, Java, Go, Rust, C++, C#, PHP, Ruby, Swift and Kotlin, plus frameworks like React, Next.js, Vue, Angular, Node.js, Express, FastAPI, Django and Spring Boot. Databases covered include PostgreSQL, MySQL, MongoDB and SQLite." },
 ];
 
 const CATEGORIES: { title: string; ids: string[]; grad: string }[] = [
