@@ -743,11 +743,12 @@ function Dashboard() {
           </div>
           <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-sm backdrop-blur-sm">
             <table className="w-full text-sm">
+              <caption className="sr-only">Feature comparison: CodeMateAI versus generic AI chat tools</caption>
               <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-3 text-left">Capability</th>
-                  <th className="px-4 py-3 text-left">CodeMateAI</th>
-                  <th className="px-4 py-3 text-left">Generic AI chat</th>
+                  <th scope="col" className="px-4 py-3 text-left">Capability</th>
+                  <th scope="col" className="px-4 py-3 text-left">CodeMateAI</th>
+                  <th scope="col" className="px-4 py-3 text-left">Generic AI chat</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/60">
