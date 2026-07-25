@@ -762,7 +762,7 @@ function Dashboard() {
                 ].map((row) => (
                   <tr key={row[0]}>
                     <td className="px-4 py-3 font-medium">{row[0]}</td>
-                    <td className="px-4 py-3 text-emerald-700">{row[1]}</td>
+                    <td className="px-4 py-3 font-medium text-emerald-800">{row[1]}</td>
                     <td className="px-4 py-3 text-muted-foreground">{row[2]}</td>
                   </tr>
                 ))}
