@@ -601,34 +601,38 @@ function Dashboard() {
           </div>
         </section>
 
-        {/* What can you build */}
+        {/* Supported technologies */}
         <section className="mb-14">
           <div className="mb-6">
             <p className="text-xs font-medium uppercase tracking-wider text-fuchsia-600">
-              What can you build
+              Supported technologies
             </p>
             <h2 className="mt-1 text-2xl font-semibold tracking-tight">
-              From web apps to APIs, mobile and beyond
+              Languages, frameworks and tools you already use
             </h2>
+            <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+              CodeMateAI works natively with the stacks most engineering teams ship on today.
+            </p>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {BUILD_CARDS.map((b) => {
-              const Icon = b.icon;
-              return (
-                <motion.div
-                  key={b.title}
-                  whileHover={{ y: -3 }}
-                  className="group relative overflow-hidden rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm transition hover:shadow-lg"
-                >
-                  <div className={`absolute -right-10 -top-10 h-28 w-28 rounded-full bg-gradient-to-br ${b.grad} opacity-10 blur-2xl transition group-hover:opacity-25`} />
-                  <div className={`inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br ${b.grad} text-white shadow`}>
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="mt-3 text-sm font-semibold">{b.title}</h3>
-                  <p className="mt-1 text-xs text-muted-foreground">{b.items.join(" · ")}</p>
-                </motion.div>
-              );
-            })}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {TECH_STACK.map((group) => (
+              <div key={group.group} className="rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm">
+                <div className={`inline-flex rounded-full bg-gradient-to-r ${group.grad} px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-white shadow`}>
+                  {group.group}
+                </div>
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {group.items.map((it) => (
+                    <Link
+                      key={it.label}
+                      to={it.to}
+                      className="rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-foreground/80 transition hover:bg-background hover:text-foreground hover:shadow-sm"
+                    >
+                      {it.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
