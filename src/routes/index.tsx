@@ -45,26 +45,27 @@ const SITE_URL = "https://codemateai.lovable.app";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "CodeMateAI — AI Developer Platform for Code, APIs, SQL & Docs" },
+      { title: "CodeMateAI — AI Coding Assistant for Code, APIs, SQL & Docs" },
       {
         name: "description",
         content:
-          "CodeMateAI is a premium AI developer platform to generate code, review pull requests, fix bugs, convert languages, and generate APIs, SQL, regex, README and documentation.",
+          "CodeMateAI is an AI coding assistant that generates production-ready code, reviews pull requests, fixes bugs, and produces APIs, SQL, regex, README files and technical documentation — right in the browser.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:title", content: "CodeMateAI — AI Developer Platform" },
+      { property: "og:title", content: "CodeMateAI — AI Coding Assistant for Developers" },
       {
         property: "og:description",
         content:
-          "Every AI dev tool in one polished workspace — code generation, review, debugging, APIs, SQL, regex, README and documentation.",
+          "Generate, review, debug and document code with an AI workspace built for students, developers, freelancers and software teams.",
       },
       { property: "og:url", content: SITE_URL },
+      { property: "og:site_name", content: "CodeMateAI" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "CodeMateAI — AI Developer Platform" },
+      { name: "twitter:title", content: "CodeMateAI — AI Coding Assistant" },
       {
         name: "twitter:description",
         content:
-          "Generate, review, convert, debug and document code with AI — one dashboard.",
+          "One AI workspace to generate code, review pull requests, fix bugs, and produce APIs, SQL and documentation.",
       },
     ],
     links: [{ rel: "canonical", href: SITE_URL }],
@@ -77,9 +78,21 @@ export const Route = createFileRoute("/")({
           name: "CodeMateAI",
           applicationCategory: "DeveloperApplication",
           operatingSystem: "Web",
+          url: SITE_URL,
           offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
           description:
-            "AI developer platform to generate code, review code, fix bugs, convert languages, and generate APIs, SQL, regex, README and documentation.",
+            "AI coding assistant to generate code, review code, fix bugs, convert languages, and generate APIs, SQL, regex, README and documentation.",
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "CodeMateAI",
+          url: SITE_URL,
+          logo: `${SITE_URL}/favicon.ico`,
+          sameAs: [],
         }),
       },
       {
