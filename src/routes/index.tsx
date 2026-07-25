@@ -708,8 +708,7 @@ function Dashboard() {
               Why developers choose CodeMateAI
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              A modern AI software development workspace built around the best AI coding
-              tools for real projects.
+              Six reasons engineers keep this tab open next to their editor.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
