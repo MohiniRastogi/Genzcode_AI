@@ -151,4 +151,33 @@
   code, pre, kbd {
     font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   }
+
+  /* Accessible keyboard focus for all interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  summary:focus-visible,
+  [tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+
+  /* Skip-to-content link — visible only on keyboard focus */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -48px;
+    z-index: 100;
+    padding: 0.5rem 0.875rem;
+    border-radius: 0.75rem;
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: top 0.15s ease;
+  }
+  .skip-link:focus {
+    top: 0.5rem;
+  }
 }
