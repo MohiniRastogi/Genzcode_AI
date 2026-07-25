@@ -390,9 +390,10 @@ function Dashboard() {
               <br className="hidden sm:inline" /> <TypingHeadline />
             </h1>
             <p className="mt-4 max-w-2xl text-base text-muted-foreground">
-              Generate production-ready code, review pull requests, fix bugs, convert
-              languages, and produce APIs, SQL, regex, README and documentation — all in
-              one polished workspace.
+              CodeMateAI is an AI-powered coding workspace where developers generate
+              production-ready code, review pull requests, fix bugs, convert languages,
+              and produce APIs, SQL, regex and technical documentation. Built for
+              students, developers and software teams — right in the browser.
             </p>
             <div className="mt-7 flex flex-wrap gap-2">
               <Link
