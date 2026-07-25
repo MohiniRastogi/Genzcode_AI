@@ -889,9 +889,9 @@ function Dashboard() {
         <section className="mb-6">
           <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-600 p-8 text-white shadow-lg sm:p-12">
             <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
-            <h3 className="max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl">
+            <h2 className="max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl">
               Ready to ship faster? Start generating code with AI now.
-            </h3>
+            </h2>
             <p className="mt-2 max-w-xl text-sm text-white/80">
               Free to try. No installation. Your history stays private in your browser.
             </p>
