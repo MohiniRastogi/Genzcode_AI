@@ -140,6 +140,9 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <SidebarProvider>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <div className="flex min-h-screen w-full bg-[oklch(0.985_0.004_260)]">
           <AppSidebar />
           <SidebarInset className="flex flex-1 flex-col">
@@ -152,7 +155,7 @@ function RootComponent() {
               </div>
               <GlobalSearch />
             </header>
-            <main className="flex-1">
+            <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
               <Outlet />
             </main>
           </SidebarInset>
