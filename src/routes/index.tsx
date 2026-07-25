@@ -821,6 +821,40 @@ function Dashboard() {
           ))}
         </section>
 
+        {/* Use cases */}
+        <section className="mb-14">
+          <div className="mb-6">
+            <p className="text-xs font-medium uppercase tracking-wider text-emerald-600">
+              Use cases
+            </p>
+            <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+              Where CodeMateAI fits in your day
+            </h2>
+            <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+              A few common workflows engineers reach for CodeMateAI to handle.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {USE_CASES.map((u) => {
+              const Icon = u.icon;
+              return (
+                <motion.div
+                  key={u.title}
+                  whileHover={{ y: -3 }}
+                  className="group relative overflow-hidden rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm transition hover:shadow-lg"
+                >
+                  <div className={`absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gradient-to-br ${u.grad} opacity-10 blur-2xl transition group-hover:opacity-25`} />
+                  <div className={`inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br ${u.grad} text-white shadow`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mt-3 text-sm font-semibold">{u.title}</h3>
+                  <p className="mt-1 text-xs text-muted-foreground">{u.desc}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
         {/* FAQ */}
         <section className="mb-14">
           <div className="mb-6">
@@ -828,7 +862,7 @@ function Dashboard() {
               Frequently asked questions
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Everything about AI code generation, review, bug fixing, SQL, APIs, and more.
+              Straight answers about how CodeMateAI works and where it helps most.
             </p>
           </div>
           <div className="rounded-3xl border border-border/60 bg-card/70 px-6 py-2 shadow-sm backdrop-blur-sm">
