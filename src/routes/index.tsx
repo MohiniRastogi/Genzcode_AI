@@ -485,37 +485,41 @@ function Dashboard() {
           </section>
         )}
 
-        {/* AI Developer Platform features */}
+        {/* Solutions */}
         <section className="mb-14">
-          <div className="mb-6 flex items-baseline justify-between">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-violet-600">
-                AI Developer Platform
-              </p>
-              <h2 className="mt-1 text-2xl font-semibold tracking-tight">
-                Everything you need to ship faster
-              </h2>
-            </div>
+          <div className="mb-6">
+            <p className="text-xs font-medium uppercase tracking-wider text-violet-600">
+              Built for every kind of builder
+            </p>
+            <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+              Solutions for how you actually work
+            </h2>
+            <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+              From your first Python function to a production API — CodeMateAI adapts to the way you build.
+            </p>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {PLATFORM_FEATURES.map((f, idx) => {
-              const Icon = f.icon;
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {SOLUTIONS.map((s, idx) => {
+              const Icon = s.icon;
               return (
                 <motion.div
-                  key={f.title}
+                  key={s.title}
                   initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.35, delay: idx * 0.03 }}
+                  transition={{ duration: 0.35, delay: idx * 0.05 }}
                   whileHover={{ y: -3 }}
-                  className="group relative overflow-hidden rounded-3xl border border-border/60 bg-white/60 p-5 shadow-sm backdrop-blur-md transition hover:shadow-xl"
+                  className="group relative flex flex-col overflow-hidden rounded-3xl border border-border/60 bg-white/60 p-5 shadow-sm backdrop-blur-md transition hover:shadow-xl"
                 >
-                  <div className={`absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gradient-to-br ${f.grad} opacity-10 blur-2xl transition group-hover:opacity-30`} />
-                  <div className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${f.grad} text-white shadow-md`}>
+                  <div className={`absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gradient-to-br ${s.grad} opacity-10 blur-2xl transition group-hover:opacity-30`} />
+                  <div className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${s.grad} text-white shadow-md`}>
                     <Icon className="h-5 w-5" />
                   </div>
-                  <h3 className="mt-4 text-sm font-semibold tracking-tight">{f.title}</h3>
-                  <p className="mt-1 text-xs text-muted-foreground">{f.desc}</p>
+                  <h3 className="mt-4 text-sm font-semibold tracking-tight">{s.title}</h3>
+                  <p className="mt-1 flex-1 text-xs text-muted-foreground">{s.desc}</p>
+                  <Link to={s.to} className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground/80 transition hover:text-foreground">
+                    {s.cta} <ChevronRight className="h-3.5 w-3.5" />
+                  </Link>
                 </motion.div>
               );
             })}
