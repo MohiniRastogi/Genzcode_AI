@@ -761,7 +761,7 @@ function Dashboard() {
                   ["Utilities (JSON, JWT, Base64)", "✓ Built-in", "External sites"],
                 ].map((row) => (
                   <tr key={row[0]}>
-                    <td className="px-4 py-3 font-medium">{row[0]}</td>
+                    <th scope="row" className="px-4 py-3 text-left font-medium">{row[0]}</th>
                     <td className="px-4 py-3 font-medium text-emerald-800">{row[1]}</td>
                     <td className="px-4 py-3 text-muted-foreground">{row[2]}</td>
                   </tr>
