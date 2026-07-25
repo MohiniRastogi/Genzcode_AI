@@ -435,13 +435,13 @@ function Dashboard() {
         </section>
 
         {/* Trust bar */}
-        <section className="mb-10 rounded-3xl border border-border/60 bg-white/60 px-6 py-4 shadow-sm backdrop-blur-md">
-          <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-medium text-muted-foreground">
+        <section aria-label="Product highlights" className="mb-10 rounded-3xl border border-border/60 bg-white/60 px-6 py-4 shadow-sm backdrop-blur-md">
+          <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-medium text-foreground/80">
             {TRUST_BADGES.map((b) => {
               const Icon = b.icon;
               return (
                 <li key={b.label} className="flex items-center gap-2">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/10 to-fuchsia-500/10 text-emerald-600">
+                  <span aria-hidden="true" className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/10 to-fuchsia-500/10 text-emerald-700">
                     <Icon className="h-3.5 w-3.5" />
                   </span>
                   {b.label}
