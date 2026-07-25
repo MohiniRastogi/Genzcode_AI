@@ -413,32 +413,35 @@ function Dashboard() {
 
             {/* Popular searches */}
             <div className="mt-8">
-              <div className="mb-2 flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                <Search className="h-3.5 w-3.5" /> Popular tasks
+              <div id="popular-tasks-label" className="mb-2 flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                <Search className="h-3.5 w-3.5" aria-hidden="true" /> Popular tasks
               </div>
-              <div className="flex flex-wrap gap-1.5">
-                {POPULAR_TASKS.map((p) => (
-                  <Link
-                    key={p.label}
-                    to={p.to}
-                    className="rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-foreground/80 transition hover:bg-background hover:text-foreground hover:shadow-sm"
-                  >
-                    {p.label}
-                  </Link>
-                ))}
-              </div>
+              <nav aria-labelledby="popular-tasks-label">
+                <ul className="flex flex-wrap gap-1.5">
+                  {POPULAR_TASKS.map((p) => (
+                    <li key={p.label}>
+                      <Link
+                        to={p.to}
+                        className="inline-block rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-foreground/80 transition hover:bg-background hover:text-foreground hover:shadow-sm"
+                      >
+                        {p.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
           </div>
         </section>
 
         {/* Trust bar */}
-        <section className="mb-10 rounded-3xl border border-border/60 bg-white/60 px-6 py-4 shadow-sm backdrop-blur-md">
-          <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-medium text-muted-foreground">
+        <section aria-label="Product highlights" className="mb-10 rounded-3xl border border-border/60 bg-white/60 px-6 py-4 shadow-sm backdrop-blur-md">
+          <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-medium text-foreground/80">
             {TRUST_BADGES.map((b) => {
               const Icon = b.icon;
               return (
                 <li key={b.label} className="flex items-center gap-2">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/10 to-fuchsia-500/10 text-emerald-600">
+                  <span aria-hidden="true" className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/10 to-fuchsia-500/10 text-emerald-700">
                     <Icon className="h-3.5 w-3.5" />
                   </span>
                   {b.label}
@@ -740,11 +743,12 @@ function Dashboard() {
           </div>
           <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-sm backdrop-blur-sm">
             <table className="w-full text-sm">
+              <caption className="sr-only">Feature comparison: CodeMateAI versus generic AI chat tools</caption>
               <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-3 text-left">Capability</th>
-                  <th className="px-4 py-3 text-left">CodeMateAI</th>
-                  <th className="px-4 py-3 text-left">Generic AI chat</th>
+                  <th scope="col" className="px-4 py-3 text-left">Capability</th>
+                  <th scope="col" className="px-4 py-3 text-left">CodeMateAI</th>
+                  <th scope="col" className="px-4 py-3 text-left">Generic AI chat</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/60">
@@ -757,8 +761,8 @@ function Dashboard() {
                   ["Utilities (JSON, JWT, Base64)", "✓ Built-in", "External sites"],
                 ].map((row) => (
                   <tr key={row[0]}>
-                    <td className="px-4 py-3 font-medium">{row[0]}</td>
-                    <td className="px-4 py-3 text-emerald-700">{row[1]}</td>
+                    <th scope="row" className="px-4 py-3 text-left font-medium">{row[0]}</th>
+                    <td className="px-4 py-3 font-medium text-emerald-800">{row[1]}</td>
                     <td className="px-4 py-3 text-muted-foreground">{row[2]}</td>
                   </tr>
                 ))}
@@ -885,9 +889,9 @@ function Dashboard() {
         <section className="mb-6">
           <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-600 p-8 text-white shadow-lg sm:p-12">
             <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
-            <h3 className="max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl">
+            <h2 className="max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl">
               Ready to ship faster? Start generating code with AI now.
-            </h3>
+            </h2>
             <p className="mt-2 max-w-xl text-sm text-white/80">
               Free to try. No installation. Your history stays private in your browser.
             </p>
