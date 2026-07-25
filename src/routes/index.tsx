@@ -414,10 +414,10 @@ function Dashboard() {
             {/* Popular searches */}
             <div className="mt-8">
               <div className="mb-2 flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                <Search className="h-3.5 w-3.5" /> Popular searches
+                <Search className="h-3.5 w-3.5" /> Popular tasks
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {POPULAR_SEARCHES.map((p) => (
+                {POPULAR_TASKS.map((p) => (
                   <Link
                     key={p.label}
                     to={p.to}
