@@ -413,20 +413,23 @@ function Dashboard() {
 
             {/* Popular searches */}
             <div className="mt-8">
-              <div className="mb-2 flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                <Search className="h-3.5 w-3.5" /> Popular tasks
+              <div id="popular-tasks-label" className="mb-2 flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                <Search className="h-3.5 w-3.5" aria-hidden="true" /> Popular tasks
               </div>
-              <div className="flex flex-wrap gap-1.5">
-                {POPULAR_TASKS.map((p) => (
-                  <Link
-                    key={p.label}
-                    to={p.to}
-                    className="rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-foreground/80 transition hover:bg-background hover:text-foreground hover:shadow-sm"
-                  >
-                    {p.label}
-                  </Link>
-                ))}
-              </div>
+              <nav aria-labelledby="popular-tasks-label">
+                <ul className="flex flex-wrap gap-1.5">
+                  {POPULAR_TASKS.map((p) => (
+                    <li key={p.label}>
+                      <Link
+                        to={p.to}
+                        className="inline-block rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-foreground/80 transition hover:bg-background hover:text-foreground hover:shadow-sm"
+                      >
+                        {p.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
           </div>
         </section>
