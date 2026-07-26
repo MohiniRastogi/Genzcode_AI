@@ -11,6 +11,22 @@ import {
 } from "@/components/ui/command";
 import { TOOLS, CATEGORIES } from "@/features/tools/registry";
 
+// Aliases so typing a language / tech / framework surfaces the right tool.
+const TOOL_ALIASES: Record<string, string> = {
+  "code-generator": "python javascript typescript react vue nextjs node java go rust php ruby swift kotlin function component",
+  "code-reviewer": "review lint quality security readability performance pull request pr",
+  "bug-solver": "debug error exception stack trace fix crash",
+  "code-converter": "translate migrate java python javascript typescript go rust c# php",
+  "api-generator": "rest express fastapi flask django spring boot node backend endpoint jwt swagger",
+  "sql-generator": "postgres postgresql mysql sqlite mssql query database join",
+  "regex-generator": "regex regular expression pattern match validate",
+  "readme-generator": "readme markdown documentation project",
+  "documentation-generator": "docs jsdoc docstring javadoc api documentation",
+  "json-formatter": "json format validate minify",
+  "jwt-decoder": "jwt token auth decode header payload",
+  "base64": "base64 encode decode",
+};
+
 export function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
