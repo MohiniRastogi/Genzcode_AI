@@ -299,7 +299,7 @@ const CATEGORIES: { title: string; ids: string[]; grad: string }[] = [
 ];
 
 function TypingHeadline() {
-  const words = ["modern developers.", "shipping teams.", "indie hackers.", "solo builders."];
+  const words = ["modern developers.", "shipping teams.", "Indian developers.", "solo builders."];
   const [i, setI] = useState(0);
   const [text, setText] = useState("");
   const [dir, setDir] = useState<1 | -1>(1);
