@@ -59,7 +59,7 @@ export function GlobalSearch() {
         </kbd>
       </button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search 30+ developer tools…" />
+        <CommandInput placeholder="Search by tool, language, framework — python, react, sql…" />
         <CommandList>
           <CommandEmpty>No tool found.</CommandEmpty>
           {CATEGORIES.map((cat) => {
