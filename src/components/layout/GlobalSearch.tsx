@@ -11,6 +11,22 @@ import {
 } from "@/components/ui/command";
 import { TOOLS, CATEGORIES } from "@/features/tools/registry";
 
+// Aliases so typing a language / tech / framework surfaces the right tool.
+const TOOL_ALIASES: Record<string, string> = {
+  "code-generator": "python javascript typescript react vue nextjs node java go rust php ruby swift kotlin function component",
+  "code-reviewer": "review lint quality security readability performance pull request pr",
+  "bug-solver": "debug error exception stack trace fix crash",
+  "code-converter": "translate migrate java python javascript typescript go rust c# php",
+  "api-generator": "rest express fastapi flask django spring boot node backend endpoint jwt swagger",
+  "sql-generator": "postgres postgresql mysql sqlite mssql query database join",
+  "regex-generator": "regex regular expression pattern match validate",
+  "readme-generator": "readme markdown documentation project",
+  "documentation-generator": "docs jsdoc docstring javadoc api documentation",
+  "json-formatter": "json format validate minify",
+  "jwt-decoder": "jwt token auth decode header payload",
+  "base64": "base64 encode decode",
+};
+
 export function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -43,7 +59,7 @@ export function GlobalSearch() {
         </kbd>
       </button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search 30+ developer tools…" />
+        <CommandInput placeholder="Search by tool, language, framework — python, react, sql…" />
         <CommandList>
           <CommandEmpty>No tool found.</CommandEmpty>
           {CATEGORIES.map((cat) => {
@@ -54,7 +70,8 @@ export function GlobalSearch() {
                 {items.map((t) => (
                   <CommandItem
                     key={t.id}
-                    value={`${t.title} ${t.description}`}
+                    value={`${t.title} ${t.description} ${TOOL_ALIASES[t.id] ?? ""}`}
+                    keywords={(TOOL_ALIASES[t.id] ?? "").split(" ").filter(Boolean)}
                     onSelect={() => {
                       setOpen(false);
                       navigate({ to: t.to });

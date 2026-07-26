@@ -180,63 +180,6 @@ const SOLUTIONS = [
   },
 ];
 
-const TECH_STACK: { group: string; items: { label: string; to: string }[]; grad: string }[] = [
-  {
-    group: "Languages",
-    grad: "from-indigo-500 to-violet-500",
-    items: [
-      { label: "Python", to: "/tools/code-generator" },
-      { label: "JavaScript", to: "/tools/code-generator" },
-      { label: "TypeScript", to: "/tools/code-generator" },
-      { label: "Java", to: "/tools/code-converter" },
-      { label: "C++", to: "/tools/code-generator" },
-      { label: "C#", to: "/tools/code-generator" },
-      { label: "Go", to: "/tools/code-converter" },
-      { label: "Rust", to: "/tools/code-converter" },
-      { label: "PHP", to: "/tools/code-generator" },
-      { label: "Ruby", to: "/tools/code-generator" },
-      { label: "Swift", to: "/tools/code-generator" },
-      { label: "Kotlin", to: "/tools/code-generator" },
-    ],
-  },
-  {
-    group: "Frameworks",
-    grad: "from-fuchsia-500 to-pink-500",
-    items: [
-      { label: "React", to: "/tools/code-generator" },
-      { label: "Next.js", to: "/tools/code-generator" },
-      { label: "Angular", to: "/tools/code-generator" },
-      { label: "Vue", to: "/tools/code-generator" },
-      { label: "Express", to: "/tools/api-generator" },
-      { label: "FastAPI", to: "/tools/api-generator" },
-      { label: "Flask", to: "/tools/api-generator" },
-      { label: "Django", to: "/tools/api-generator" },
-      { label: "Spring Boot", to: "/tools/api-generator" },
-    ],
-  },
-  {
-    group: "Databases",
-    grad: "from-cyan-500 to-sky-500",
-    items: [
-      { label: "MySQL", to: "/tools/sql-generator" },
-      { label: "PostgreSQL", to: "/tools/sql-generator" },
-      { label: "MongoDB", to: "/tools/sql-generator" },
-      { label: "SQLite", to: "/tools/sql-generator" },
-    ],
-  },
-  {
-    group: "Utilities",
-    grad: "from-emerald-500 to-teal-500",
-    items: [
-      { label: "JSON", to: "/utilities/json-formatter" },
-      { label: "JWT", to: "/utilities/jwt-decoder" },
-      { label: "Base64", to: "/utilities/base64" },
-      { label: "Regex", to: "/tools/regex-generator" },
-      { label: "Markdown", to: "/tools/documentation-generator" },
-      { label: "REST API", to: "/tools/api-generator" },
-    ],
-  },
-];
 
 const USE_CASES = [
   { icon: Globe, title: "Web development", desc: "Ship React, Next.js and Vue interfaces with AI-generated components, hooks and utility functions.", grad: "from-indigo-500 to-blue-500" },
@@ -299,7 +242,7 @@ const CATEGORIES: { title: string; ids: string[]; grad: string }[] = [
 ];
 
 function TypingHeadline() {
-  const words = ["modern developers.", "shipping teams.", "indie hackers.", "solo builders."];
+  const words = ["modern developers.", "shipping teams.", "Indian developers.", "solo builders."];
   const [i, setI] = useState(0);
   const [text, setText] = useState("");
   const [dir, setDir] = useState<1 | -1>(1);
@@ -604,40 +547,38 @@ function Dashboard() {
           </div>
         </section>
 
-        {/* Supported technologies */}
+        {/* Supported technologies — described in prose, not keyword chips */}
         <section className="mb-14">
           <div className="mb-6">
             <p className="text-xs font-medium uppercase tracking-wider text-fuchsia-600">
-              Supported technologies
+              Works with your stack
             </p>
             <h2 className="mt-1 text-2xl font-semibold tracking-tight">
-              Languages, frameworks and tools you already use
+              Fluent across the languages and frameworks you ship with
             </h2>
-            <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-              CodeMateAI works natively with the stacks most engineering teams ship on today.
-            </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {TECH_STACK.map((group) => (
-              <div key={group.group} className="rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm">
-                <div className={`inline-flex rounded-full bg-gradient-to-r ${group.grad} px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-white shadow`}>
-                  {group.group}
-                </div>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {group.items.map((it) => (
-                    <Link
-                      key={it.label}
-                      to={it.to}
-                      className="rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-foreground/80 transition hover:bg-background hover:text-foreground hover:shadow-sm"
-                    >
-                      {it.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-sm backdrop-blur-sm">
+              <h3 className="text-sm font-semibold">Application code</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Generate idiomatic Python, JavaScript, TypeScript, Java, Go, Rust, C#, PHP,
+                Ruby, Swift and Kotlin — with first-class support for React, Next.js, Vue,
+                Angular, Node.js, Express, FastAPI, Django and Spring Boot when you scaffold
+                full features or REST endpoints.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-border/60 bg-card/70 p-6 shadow-sm backdrop-blur-sm">
+              <h3 className="text-sm font-semibold">Data & tooling</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Turn plain English into optimized SQL for PostgreSQL, MySQL, SQLite or SQL
+                Server, model MongoDB collections, craft precise regular expressions, and
+                handle everyday utilities like JSON, JWT and Base64 without leaving the
+                workspace.
+              </p>
+            </div>
           </div>
         </section>
+
 
         {/* Tool categories */}
         <section className="mb-14">
