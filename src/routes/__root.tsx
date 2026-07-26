@@ -168,7 +168,10 @@ function RootComponent() {
                   Generate. Review. Convert. Optimize. Learn.
                 </span>
               </div>
-              <GlobalSearch />
+              <div className="flex items-center gap-2">
+                <ToolsMenu />
+                <GlobalSearch />
+              </div>
             </header>
             <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
               <Outlet />
