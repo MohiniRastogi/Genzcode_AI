@@ -136,6 +136,13 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [scrolled, setScrolled] = (require("react") as typeof import("react")).useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -146,7 +153,14 @@ function RootComponent() {
         <div className="flex min-h-screen w-full bg-[oklch(0.985_0.004_260)]">
           <AppSidebar />
           <SidebarInset className="flex flex-1 flex-col">
-            <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-2 border-b border-border/60 bg-background/70 px-4 backdrop-blur-md">
+            <header
+              className={
+                "sticky top-0 z-30 flex h-14 items-center justify-between gap-2 px-4 transition-all duration-300 " +
+                (scrolled
+                  ? "border-b border-border/60 bg-background/95 shadow-sm backdrop-blur-xl supports-[backdrop-filter]:bg-background/80"
+                  : "border-b border-transparent bg-background/40 backdrop-blur-md supports-[backdrop-filter]:bg-background/30")
+              }
+            >
               <div className="flex items-center gap-2">
                 <SidebarTrigger />
                 <span className="text-sm font-medium text-muted-foreground">
