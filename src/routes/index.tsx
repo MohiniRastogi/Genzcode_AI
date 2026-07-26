@@ -180,63 +180,6 @@ const SOLUTIONS = [
   },
 ];
 
-const TECH_STACK: { group: string; items: { label: string; to: string }[]; grad: string }[] = [
-  {
-    group: "Languages",
-    grad: "from-indigo-500 to-violet-500",
-    items: [
-      { label: "Python", to: "/tools/code-generator" },
-      { label: "JavaScript", to: "/tools/code-generator" },
-      { label: "TypeScript", to: "/tools/code-generator" },
-      { label: "Java", to: "/tools/code-converter" },
-      { label: "C++", to: "/tools/code-generator" },
-      { label: "C#", to: "/tools/code-generator" },
-      { label: "Go", to: "/tools/code-converter" },
-      { label: "Rust", to: "/tools/code-converter" },
-      { label: "PHP", to: "/tools/code-generator" },
-      { label: "Ruby", to: "/tools/code-generator" },
-      { label: "Swift", to: "/tools/code-generator" },
-      { label: "Kotlin", to: "/tools/code-generator" },
-    ],
-  },
-  {
-    group: "Frameworks",
-    grad: "from-fuchsia-500 to-pink-500",
-    items: [
-      { label: "React", to: "/tools/code-generator" },
-      { label: "Next.js", to: "/tools/code-generator" },
-      { label: "Angular", to: "/tools/code-generator" },
-      { label: "Vue", to: "/tools/code-generator" },
-      { label: "Express", to: "/tools/api-generator" },
-      { label: "FastAPI", to: "/tools/api-generator" },
-      { label: "Flask", to: "/tools/api-generator" },
-      { label: "Django", to: "/tools/api-generator" },
-      { label: "Spring Boot", to: "/tools/api-generator" },
-    ],
-  },
-  {
-    group: "Databases",
-    grad: "from-cyan-500 to-sky-500",
-    items: [
-      { label: "MySQL", to: "/tools/sql-generator" },
-      { label: "PostgreSQL", to: "/tools/sql-generator" },
-      { label: "MongoDB", to: "/tools/sql-generator" },
-      { label: "SQLite", to: "/tools/sql-generator" },
-    ],
-  },
-  {
-    group: "Utilities",
-    grad: "from-emerald-500 to-teal-500",
-    items: [
-      { label: "JSON", to: "/utilities/json-formatter" },
-      { label: "JWT", to: "/utilities/jwt-decoder" },
-      { label: "Base64", to: "/utilities/base64" },
-      { label: "Regex", to: "/tools/regex-generator" },
-      { label: "Markdown", to: "/tools/documentation-generator" },
-      { label: "REST API", to: "/tools/api-generator" },
-    ],
-  },
-];
 
 const USE_CASES = [
   { icon: Globe, title: "Web development", desc: "Ship React, Next.js and Vue interfaces with AI-generated components, hooks and utility functions.", grad: "from-indigo-500 to-blue-500" },
