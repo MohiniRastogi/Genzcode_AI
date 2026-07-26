@@ -70,7 +70,8 @@ export function GlobalSearch() {
                 {items.map((t) => (
                   <CommandItem
                     key={t.id}
-                    value={`${t.title} ${t.description}`}
+                    value={`${t.title} ${t.description} ${TOOL_ALIASES[t.id] ?? ""}`}
+                    keywords={(TOOL_ALIASES[t.id] ?? "").split(" ").filter(Boolean)}
                     onSelect={() => {
                       setOpen(false);
                       navigate({ to: t.to });
