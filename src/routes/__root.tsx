@@ -17,6 +17,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/AppSidebar";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { GlobalSearch } from "@/components/layout/GlobalSearch";
 import { ToolsMenu } from "@/components/layout/ToolsMenu";
 import { Toaster } from "@/components/ui/sonner";
