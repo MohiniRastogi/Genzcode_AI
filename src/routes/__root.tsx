@@ -175,6 +175,7 @@ function RootComponent() {
               </div>
             </header>
             <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+              <Breadcrumbs />
               <Outlet />
             </main>
           </SidebarInset>
