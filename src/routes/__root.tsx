@@ -17,6 +17,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/layout/AppSidebar";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { GlobalSearch } from "@/components/layout/GlobalSearch";
 import { ToolsMenu } from "@/components/layout/ToolsMenu";
 import { Toaster } from "@/components/ui/sonner";
@@ -174,6 +175,7 @@ function RootComponent() {
               </div>
             </header>
             <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+              <Breadcrumbs />
               <Outlet />
             </main>
           </SidebarInset>

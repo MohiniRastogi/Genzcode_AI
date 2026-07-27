@@ -1,5 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
+  Home,
   LayoutDashboard,
   Wand2,
   ShieldCheck,
@@ -26,8 +27,12 @@ import {
 const NAV = [
   {
     label: "Overview",
-    items: [{ title: "Dashboard", to: "/", icon: LayoutDashboard }],
+    items: [
+      { title: "Home", to: "/", icon: Home },
+      { title: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
+    ],
   },
+
   {
     label: "AI Tools",
     items: [
