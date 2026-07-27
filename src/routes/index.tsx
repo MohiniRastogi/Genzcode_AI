@@ -27,6 +27,7 @@ import {
   Pin,
   Clock,
   ChevronRight,
+  LayoutDashboard,
 } from "lucide-react";
 import { StatCard } from "@/components/tools/StatCard";
 import { QuickActionCard } from "@/components/tools/QuickActionCard";
