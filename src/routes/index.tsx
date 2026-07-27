@@ -27,6 +27,7 @@ import {
   Pin,
   Clock,
   ChevronRight,
+  LayoutDashboard,
 } from "lucide-react";
 import { StatCard } from "@/components/tools/StatCard";
 import { QuickActionCard } from "@/components/tools/QuickActionCard";
@@ -351,6 +352,12 @@ function Dashboard() {
                 className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background/70 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:bg-background"
               >
                 <ShieldCheck className="h-4 w-4" /> Review my code
+              </Link>
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background/70 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:bg-background"
+              >
+                <LayoutDashboard className="h-4 w-4" /> Go to Dashboard
               </Link>
             </div>
 
