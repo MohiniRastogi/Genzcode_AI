@@ -14,7 +14,7 @@ export function ToolPage({ tool, children }: Props) {
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-8">
       <nav className="mb-4 flex items-center gap-1 text-xs text-muted-foreground">
-        <Link to="/" className="hover:text-foreground">Dashboard</Link>
+        <Link to="/" className="hover:text-foreground">Home</Link>
         <ChevronRight className="h-3 w-3" />
         <span>{tool.category}</span>
         <ChevronRight className="h-3 w-3" />

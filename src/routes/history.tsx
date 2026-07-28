@@ -3,9 +3,9 @@ import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useHistory } from "@/features/history/useHistory";
-import { findTool } from "@/features/tools/registry";
+import { findTool, TOOLS } from "@/features/tools/registry";
 import { AIResponseRenderer } from "@/components/tools/AIResponseRenderer";
-import { Star, Trash2, ChevronRight, Search } from "lucide-react";
+import { Star, Trash2, ChevronRight, Search, ArrowLeft, Home } from "lucide-react";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
@@ -19,6 +19,15 @@ export const Route = createFileRoute("/history")({
   }),
   component: HistoryPage,
 });
+
+const QUICK_ACTION_IDS = [
+  "code-generator",
+  "code-reviewer",
+  "code-converter",
+  "sql-generator",
+  "api-generator",
+  "readme-generator",
+];
 
 function HistoryPage() {
   const { entries, remove, toggleFavorite, clear } = useHistory();
@@ -34,9 +43,24 @@ function HistoryPage() {
   );
 
   const active = filtered.find((e) => e.id === open);
+  const quickActions = QUICK_ACTION_IDS
+    .map((id) => TOOLS.find((t) => t.id === id))
+    .filter((t): t is NonNullable<typeof t> => !!t);
 
   return (
     <div className="mx-auto w-full max-w-5xl px-6 py-8">
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        <Button asChild variant="outline" size="sm">
+          <Link to="/dashboard">
+            <ArrowLeft className="h-4 w-4" /> Back to Dashboard
+          </Link>
+        </Button>
+        <Button asChild variant="ghost" size="sm">
+          <Link to="/">
+            <Home className="h-4 w-4" /> Home
+          </Link>
+        </Button>
+      </div>
       <header className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">History</h1>
@@ -50,18 +74,52 @@ function HistoryPage() {
           </Button>
         )}
       </header>
-      <div className="mb-4 flex items-center gap-2 rounded-2xl border border-border/60 bg-card/70 px-3 py-2 backdrop-blur-sm">
-        <Search className="h-4 w-4 text-muted-foreground" />
-        <Input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Search history…"
-          className="border-0 bg-transparent shadow-none focus-visible:ring-0"
-        />
-      </div>
-      {filtered.length === 0 ? (
+      {entries.length > 0 && (
+        <div className="mb-4 flex items-center gap-2 rounded-2xl border border-border/60 bg-card/70 px-3 py-2 backdrop-blur-sm">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <Input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Search history…"
+            className="border-0 bg-transparent shadow-none focus-visible:ring-0"
+          />
+        </div>
+      )}
+      {entries.length === 0 ? (
+        <div className="space-y-6">
+          <div className="rounded-3xl border border-dashed border-border/60 bg-card/40 p-10 text-center">
+            <p className="text-sm font-medium text-foreground">No recent activity yet.</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Anything you generate will appear here automatically.
+            </p>
+          </div>
+          <div>
+            <h2 className="mb-3 text-sm font-semibold text-foreground">Quick actions</h2>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {quickActions.map((tool) => {
+                const Icon = tool.icon;
+                return (
+                  <Link
+                    key={tool.id}
+                    to={tool.to}
+                    className="group flex items-start gap-3 rounded-2xl border border-border/60 bg-card/70 p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                  >
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${tool.gradient} text-white`}>
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm font-medium">{tool.title}</div>
+                      <div className="line-clamp-2 text-xs text-muted-foreground">{tool.description}</div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      ) : filtered.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-border/60 bg-card/40 p-10 text-center text-sm text-muted-foreground">
-          Nothing yet. Try the <Link to="/tools/code-generator" className="underline">Code Generator</Link>.
+          No results for “{q}”.
         </div>
       ) : (
         <ul className="divide-y divide-border/60 overflow-hidden rounded-3xl border border-border/60 bg-card/70 backdrop-blur-sm">
