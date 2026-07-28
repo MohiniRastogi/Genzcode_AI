@@ -197,6 +197,23 @@ function Page() {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
             />
+            <div className="mt-3">
+              <div className="mb-1.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                Popular examples
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {POPULAR_EXAMPLES.map((ex) => (
+                  <button
+                    key={ex}
+                    type="button"
+                    onClick={() => setPrompt(ex)}
+                    className="rounded-full border border-border/60 bg-background/70 px-2.5 py-1 text-[11px] text-muted-foreground transition hover:-translate-y-0.5 hover:bg-background hover:text-foreground"
+                  >
+                    {ex}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
           <Button
             className="w-full gap-2 rounded-2xl bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 text-white hover:opacity-90"
