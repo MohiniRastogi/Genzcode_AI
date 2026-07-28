@@ -253,6 +253,38 @@ function Page() {
           )}
         </div>
       </div>
+
+      <section aria-labelledby="related-tools" className="mt-12">
+        <h2 id="related-tools" className="text-lg font-semibold tracking-tight">Related tools</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Pair the code generator with a reviewer, converter or documentation tool to move faster.
+        </p>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {RELATED_TOOL_IDS.map((id) => {
+            const t = TOOLS.find((x) => x.id === id);
+            if (!t) return null;
+            const Icon = t.icon;
+            return (
+              <Link
+                key={t.id}
+                to={t.to}
+                className="group flex items-start gap-3 rounded-2xl border border-border/60 bg-card/70 p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${t.gradient} text-white`}>
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="text-sm font-medium">{t.title}</div>
+                    <ArrowRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-foreground" />
+                  </div>
+                  <div className="line-clamp-2 text-xs text-muted-foreground">{t.description}</div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
     </ToolPage>
   );
 }
