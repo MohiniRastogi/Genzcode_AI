@@ -20,6 +20,7 @@ import { AppSidebar } from "@/components/layout/AppSidebar";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { GlobalSearch } from "@/components/layout/GlobalSearch";
 import { ToolsMenu } from "@/components/layout/ToolsMenu";
+import { BackToTop } from "@/components/layout/BackToTop";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
