@@ -20,6 +20,7 @@ import { AppSidebar } from "@/components/layout/AppSidebar";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { GlobalSearch } from "@/components/layout/GlobalSearch";
 import { ToolsMenu } from "@/components/layout/ToolsMenu";
+import { BackToTop } from "@/components/layout/BackToTop";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -158,32 +159,41 @@ function RootComponent() {
         </a>
         <div className="flex min-h-screen w-full bg-[oklch(0.985_0.004_260)]">
           <AppSidebar />
-          <SidebarInset className="flex flex-1 flex-col">
+          <SidebarInset className="flex min-w-0 flex-1 flex-col">
             <header
               className={
-                "sticky top-0 z-30 flex h-14 items-center justify-between gap-2 px-4 transition-all duration-300 " +
+                "sticky top-0 z-30 flex flex-col gap-2 px-3 py-2 transition-all duration-300 sm:h-14 sm:flex-row sm:items-center sm:justify-between sm:gap-2 sm:px-4 sm:py-0 " +
                 (scrolled
                   ? "border-b border-border/60 bg-background/95 shadow-sm backdrop-blur-xl supports-[backdrop-filter]:bg-background/80"
                   : "border-b border-transparent bg-background/40 backdrop-blur-md supports-[backdrop-filter]:bg-background/30")
               }
             >
-              <div className="flex items-center gap-2">
-                <SidebarTrigger />
-                <span className="text-sm font-medium text-muted-foreground">
-                  Generate. Review. Convert. Optimize. Learn.
-                </span>
+              <div className="flex min-w-0 items-center justify-between gap-2">
+                <div className="flex min-w-0 items-center gap-2">
+                  <SidebarTrigger className="h-11 w-11 shrink-0 sm:h-9 sm:w-9" />
+                  <span className="hidden truncate text-sm font-medium text-muted-foreground md:inline">
+                    Generate. Review. Convert. Optimize. Learn.
+                  </span>
+                </div>
+                <div className="flex shrink-0 items-center gap-2">
+                  <ToolsMenu />
+                  <div className="hidden sm:block">
+                    <GlobalSearch />
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <ToolsMenu />
-                <GlobalSearch />
+              <div className="sm:hidden">
+                <GlobalSearch fullWidth />
               </div>
             </header>
-            <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+            <main id="main-content" tabIndex={-1} className="min-w-0 flex-1 focus:outline-none">
               <Breadcrumbs />
               <Outlet />
             </main>
           </SidebarInset>
         </div>
+        <BackToTop />
+
         <Toaster richColors position="top-right" />
       </SidebarProvider>
     </QueryClientProvider>

@@ -32,6 +32,7 @@ import {
 import { StatCard } from "@/components/tools/StatCard";
 import { QuickActionCard } from "@/components/tools/QuickActionCard";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { TOOLS } from "@/features/tools/registry";
 import { useHistory, useHistoryStats } from "@/features/history/useHistory";
 import {
@@ -202,6 +203,15 @@ const WHY_CARDS = [
   { icon: Sparkles, title: "Developer experience", desc: "One clean workspace for generation, review, conversion, SQL, regex and APIs." },
 ];
 
+const COMPARISON: [string, string, string][] = [
+  ["Dedicated code generator", "✓ Structured output", "Free text only"],
+  ["AI code review with scores", "✓ Per-category scoring", "Ad-hoc"],
+  ["Bug solver with fix", "✓ Detects & fixes", "Manual"],
+  ["SQL, Regex, API, README", "✓ Purpose-built tools", "Prompt engineering"],
+  ["History & favorites", "✓ Local & private", "None"],
+  ["Utilities (JSON, JWT, Base64)", "✓ Built-in", "External sites"],
+];
+
 const HOW_STEPS = [
   { n: "01", title: "Describe your task", desc: "Type a plain-English prompt or paste the code you want to work with." },
   { n: "02", title: "Choose an AI tool", desc: "Generator, reviewer, bug solver, converter, SQL, regex, API or docs." },
@@ -311,9 +321,9 @@ function Dashboard() {
 
   return (
     <div>
-      <div className="mx-auto w-full max-w-7xl px-6 py-8">
+      <ScrollReveal className="section-stack mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
         {/* Hero */}
-        <section className="relative mb-10 overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-white via-white to-[oklch(0.97_0.02_290)] p-8 shadow-sm sm:p-12">
+        <section className="relative mb-12 overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-[oklch(0.97_0.03_270)] via-white to-[oklch(0.95_0.05_310)] p-6 shadow-xl shadow-violet-500/10 ring-1 ring-white/60 sm:p-12">
           <motion.div
             animate={{ x: [0, 20, 0], y: [0, -10, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -342,20 +352,20 @@ function Dashboard() {
             <div className="mt-7 flex flex-wrap gap-2">
               <Link
                 to="/tools/code-generator"
-                className="group inline-flex items-center gap-2 rounded-2xl bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-lg transition hover:opacity-90"
+                className="group inline-flex min-h-11 items-center gap-2 rounded-2xl bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-lg transition hover:opacity-90"
               >
                 <Sparkles className="h-4 w-4" /> Start generating code
                 <ChevronRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
               </Link>
               <Link
                 to="/tools/code-reviewer"
-                className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background/70 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:bg-background"
+                className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-border/60 bg-background/70 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:bg-background"
               >
                 <ShieldCheck className="h-4 w-4" /> Review my code
               </Link>
               <Link
                 to="/dashboard"
-                className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background/70 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:bg-background"
+                className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-border/60 bg-background/70 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:bg-background"
               >
                 <LayoutDashboard className="h-4 w-4" /> Go to Dashboard
               </Link>
@@ -367,12 +377,12 @@ function Dashboard() {
                 <Search className="h-3.5 w-3.5" aria-hidden="true" /> Popular tasks
               </div>
               <nav aria-labelledby="popular-tasks-label">
-                <ul className="flex flex-wrap gap-1.5">
+                <ul className="snap-strip scroll-fade-x">
                   {POPULAR_TASKS.map((p) => (
                     <li key={p.label}>
                       <Link
                         to={p.to}
-                        className="inline-block rounded-full border border-border/60 bg-background/70 px-3 py-1 text-xs text-foreground/80 transition hover:bg-background hover:text-foreground hover:shadow-sm"
+                        className="inline-flex min-h-11 items-center whitespace-nowrap rounded-full border border-border/60 bg-background/70 px-4 py-1 text-xs text-foreground/80 transition hover:-translate-y-0.5 hover:border-violet-500/40 hover:bg-background hover:text-foreground hover:shadow-sm md:min-h-0 md:py-1.5"
                       >
                         {p.label}
                       </Link>
@@ -402,13 +412,13 @@ function Dashboard() {
         </section>
 
         {/* Stats */}
-        <section className="mb-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-          <StatCard label="Today's AI requests" value={stats.today} icon={Activity} gradient="from-indigo-500 to-violet-500" />
-          <StatCard label="Programs generated" value={stats.byTool("code-generator")} icon={Sparkles} gradient="from-fuchsia-500 to-pink-500" />
-          <StatCard label="Code reviews" value={stats.byTool("code-reviewer")} icon={ShieldCheck} gradient="from-emerald-500 to-teal-500" />
-          <StatCard label="Bugs solved" value={stats.byTool("bug-solver")} icon={FolderCode} gradient="from-rose-500 to-red-500" />
-          <StatCard label="Saved snippets" value={stats.favorites} icon={Star} gradient="from-amber-500 to-orange-500" />
-          <StatCard label="Total runs" value={stats.total} icon={Save} gradient="from-cyan-500 to-blue-500" />
+        <section className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+          <StatCard label="Today's AI requests" value={stats.today || "Ready when you are"} icon={Activity} gradient="from-indigo-500 to-violet-500" />
+          <StatCard label="Programs generated" value={stats.byTool("code-generator") || "Nothing generated yet"} icon={Sparkles} gradient="from-fuchsia-500 to-pink-500" />
+          <StatCard label="Code reviews" value={stats.byTool("code-reviewer") || "Paste code to review"} icon={ShieldCheck} gradient="from-emerald-500 to-teal-500" />
+          <StatCard label="Bugs solved" value={stats.byTool("bug-solver") || "No bugs solved yet"} icon={FolderCode} gradient="from-rose-500 to-red-500" />
+          <StatCard label="Saved snippets" value={stats.favorites || "Star a result to save it"} icon={Star} gradient="from-amber-500 to-orange-500" />
+          <StatCard label="Total runs" value={stats.total || "Your first run awaits"} icon={Save} gradient="from-cyan-500 to-blue-500" />
         </section>
 
         {/* Continue working */}
@@ -462,7 +472,7 @@ function Dashboard() {
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ duration: 0.35, delay: idx * 0.05 }}
                   whileHover={{ y: -3 }}
-                  className="group relative flex flex-col overflow-hidden rounded-3xl border border-border/60 bg-white/60 p-5 shadow-sm backdrop-blur-md transition hover:shadow-xl"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 bg-white/60 p-5 shadow-sm backdrop-blur-md transition hover:border-violet-500/40 hover:shadow-xl"
                 >
                   <div className={`absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gradient-to-br ${s.grad} opacity-10 blur-2xl transition group-hover:opacity-30`} />
                   <div className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${s.grad} text-white shadow-md`}>
@@ -501,7 +511,7 @@ function Dashboard() {
             <ul className="mt-3 space-y-2">
               {trending.map((t) => (
                 <li key={t.id}>
-                  <Link to={t.to} className="flex items-center justify-between rounded-xl px-2 py-1.5 text-sm transition hover:bg-muted/50">
+                  <Link to={t.to} className="flex min-h-11 items-center justify-between rounded-xl px-2 py-1.5 text-sm transition hover:bg-muted/50 md:min-h-0">
                     <span className="truncate">{t.title}</span>
                     <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
                   </Link>
@@ -516,10 +526,10 @@ function Dashboard() {
             <ul className="mt-3 space-y-2">
               {popular.map((t) => (
                 <li key={t.id}>
-                  <Link to={t.to} className="flex items-center justify-between rounded-xl px-2 py-1.5 text-sm transition hover:bg-muted/50">
+                  <Link to={t.to} className="flex min-h-11 items-center justify-between rounded-xl px-2 py-1.5 text-sm transition hover:bg-muted/50 md:min-h-0">
                     <span className="truncate">{t.title}</span>
                     <span className="text-[11px] text-muted-foreground">
-                      {usageByTool[t.id] ?? 0} runs
+                      {usageByTool[t.id] ? `${usageByTool[t.id]} runs` : "Try it"}
                     </span>
                   </Link>
                 </li>
@@ -605,7 +615,7 @@ function Dashboard() {
                     const Icon = t.icon;
                     return (
                       <li key={id}>
-                        <Link to={t.to} className="flex items-center gap-3 rounded-xl px-2 py-1.5 text-sm transition hover:bg-muted/50">
+                        <Link to={t.to} className="flex min-h-11 items-center gap-3 rounded-xl px-2 py-1.5 text-sm transition hover:bg-muted/50 md:min-h-0">
                           <div className={`flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br ${t.gradient} text-white`}>
                             <Icon className="h-3.5 w-3.5" />
                           </div>
@@ -669,7 +679,7 @@ function Dashboard() {
                 <motion.div
                   key={c.title}
                   whileHover={{ y: -3 }}
-                  className="rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm transition hover:shadow-md"
+                  className="h-full rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm transition hover:border-violet-500/40 hover:shadow-lg"
                 >
                   <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-800 to-slate-600 text-white shadow">
                     <Icon className="h-5 w-5" />
@@ -689,35 +699,58 @@ function Dashboard() {
               CodeMateAI vs. copy-pasting from a chat window
             </h2>
           </div>
-          <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-sm backdrop-blur-sm">
-            <table className="w-full text-sm">
-              <caption className="sr-only">Feature comparison: CodeMateAI versus generic AI chat tools</caption>
-              <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
-                <tr>
-                  <th scope="col" className="px-4 py-3 text-left">Capability</th>
-                  <th scope="col" className="px-4 py-3 text-left">CodeMateAI</th>
-                  <th scope="col" className="px-4 py-3 text-left">Generic AI chat</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border/60">
-                {[
-                  ["Dedicated code generator", "✓ Structured output", "Free text only"],
-                  ["AI code review with scores", "✓ Per-category scoring", "Ad-hoc"],
-                  ["Bug solver with fix", "✓ Detects & fixes", "Manual"],
-                  ["SQL, Regex, API, README", "✓ Purpose-built tools", "Prompt engineering"],
-                  ["History & favorites", "✓ Local & private", "None"],
-                  ["Utilities (JSON, JWT, Base64)", "✓ Built-in", "External sites"],
-                ].map((row) => (
-                  <tr key={row[0]}>
-                    <th scope="row" className="px-4 py-3 text-left font-medium">{row[0]}</th>
-                    <td className="px-4 py-3 font-medium text-emerald-800">{row[1]}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{row[2]}</td>
+
+          {/* Stacked comparison cards on small screens */}
+          <ul className="grid gap-3 sm:hidden">
+            {COMPARISON.map((row) => (
+              <li
+                key={row[0]}
+                className="rounded-3xl border border-border/60 bg-card/70 p-4 shadow-sm backdrop-blur-sm"
+              >
+                <div className="text-sm font-semibold">{row[0]}</div>
+                <dl className="mt-3 grid grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <dt className="uppercase tracking-wider text-muted-foreground">CodeMateAI</dt>
+                    <dd className="mt-1 font-medium text-emerald-800">{row[1]}</dd>
+                  </div>
+                  <div>
+                    <dt className="uppercase tracking-wider text-muted-foreground">Generic AI chat</dt>
+                    <dd className="mt-1 text-muted-foreground">{row[2]}</dd>
+                  </div>
+                </dl>
+              </li>
+            ))}
+          </ul>
+
+          {/* Table from 640px up, horizontally scrollable with a fade edge */}
+          <div className="hidden overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-sm backdrop-blur-sm sm:block">
+            <div className="scroll-fade-x overflow-x-auto lg:[mask-image:none]">
+              <table className="w-full min-w-[640px] text-sm">
+                <caption className="sr-only">Feature comparison: CodeMateAI versus generic AI chat tools</caption>
+                <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
+                  <tr>
+                    <th scope="col" className="px-4 py-3 text-left">Capability</th>
+                    <th scope="col" className="px-4 py-3 text-left">CodeMateAI</th>
+                    <th scope="col" className="px-4 py-3 text-left">Generic AI chat</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-border/60">
+                  {COMPARISON.map((row) => (
+                    <tr key={row[0]}>
+                      <th scope="row" className="px-4 py-3 text-left font-medium">{row[0]}</th>
+                      <td className="px-4 py-3 font-medium text-emerald-800">{row[1]}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{row[2]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="px-4 py-2 text-[11px] text-muted-foreground lg:hidden">
+              Swipe to compare →
+            </p>
           </div>
         </section>
+
 
         {/* Recent activity */}
         <section className="mb-14">
@@ -793,7 +826,7 @@ function Dashboard() {
                 <motion.div
                   key={u.title}
                   whileHover={{ y: -3 }}
-                  className="group relative overflow-hidden rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm transition hover:shadow-lg"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm transition hover:border-violet-500/40 hover:shadow-lg"
                 >
                   <div className={`absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gradient-to-br ${u.grad} opacity-10 blur-2xl transition group-hover:opacity-25`} />
                   <div className={`inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br ${u.grad} text-white shadow`}>
@@ -846,20 +879,20 @@ function Dashboard() {
             <div className="mt-6 flex flex-wrap gap-2">
               <Link
                 to="/tools/code-generator"
-                className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-2.5 text-sm font-medium text-slate-900 shadow transition hover:opacity-95"
+                className="inline-flex min-h-11 items-center gap-2 rounded-2xl bg-white px-5 py-2.5 text-sm font-medium text-slate-900 shadow transition hover:opacity-95"
               >
                 <Sparkles className="h-4 w-4" /> Open Code Generator
               </Link>
               <Link
                 to="/tools/api-generator"
-                className="inline-flex items-center gap-2 rounded-2xl border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:bg-white/20"
+                className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:bg-white/20"
               >
                 <TerminalSquare className="h-4 w-4" /> Generate an API
               </Link>
             </div>
           </div>
         </section>
-      </div>
+      </ScrollReveal>
 
       <SiteFooter />
     </div>
