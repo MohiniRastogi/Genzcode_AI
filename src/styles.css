@@ -181,3 +181,71 @@
     top: 0.5rem;
   }
 }
+
+@layer components {
+  /* Scroll reveal (applied by ScrollReveal.tsx) */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.22s ease-out,
+      transform 0.22s ease-out;
+    will-change: opacity, transform;
+  }
+  [data-reveal="in"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Alternating subtle tints so long section stacks stay readable */
+  .section-stack > section:nth-of-type(even):not(:last-of-type) {
+    border-radius: 1.75rem;
+    background-color: color-mix(in oklab, var(--color-muted) 55%, transparent);
+    padding: 1.5rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+
+  /* Horizontal snap strip for pill/chip rows on mobile */
+  .snap-strip {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.25rem;
+  }
+  .snap-strip::-webkit-scrollbar {
+    display: none;
+  }
+  .snap-strip > * {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+  @media (min-width: 768px) {
+    .snap-strip {
+      flex-wrap: wrap;
+      overflow-x: visible;
+    }
+  }
+
+  /* Fade edge hinting more horizontally scrollable content */
+  .scroll-fade-x {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 16px,
+      #000 calc(100% - 24px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 16px,
+      #000 calc(100% - 24px),
+      transparent 100%
+    );
+  }
+}
+
