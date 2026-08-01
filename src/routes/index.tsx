@@ -690,35 +690,58 @@ function Dashboard() {
               CodeMateAI vs. copy-pasting from a chat window
             </h2>
           </div>
-          <div className="overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-sm backdrop-blur-sm">
-            <table className="w-full text-sm">
-              <caption className="sr-only">Feature comparison: CodeMateAI versus generic AI chat tools</caption>
-              <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
-                <tr>
-                  <th scope="col" className="px-4 py-3 text-left">Capability</th>
-                  <th scope="col" className="px-4 py-3 text-left">CodeMateAI</th>
-                  <th scope="col" className="px-4 py-3 text-left">Generic AI chat</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border/60">
-                {[
-                  ["Dedicated code generator", "✓ Structured output", "Free text only"],
-                  ["AI code review with scores", "✓ Per-category scoring", "Ad-hoc"],
-                  ["Bug solver with fix", "✓ Detects & fixes", "Manual"],
-                  ["SQL, Regex, API, README", "✓ Purpose-built tools", "Prompt engineering"],
-                  ["History & favorites", "✓ Local & private", "None"],
-                  ["Utilities (JSON, JWT, Base64)", "✓ Built-in", "External sites"],
-                ].map((row) => (
-                  <tr key={row[0]}>
-                    <th scope="row" className="px-4 py-3 text-left font-medium">{row[0]}</th>
-                    <td className="px-4 py-3 font-medium text-emerald-800">{row[1]}</td>
-                    <td className="px-4 py-3 text-muted-foreground">{row[2]}</td>
+
+          {/* Stacked comparison cards on small screens */}
+          <ul className="grid gap-3 sm:hidden">
+            {COMPARISON.map((row) => (
+              <li
+                key={row[0]}
+                className="rounded-3xl border border-border/60 bg-card/70 p-4 shadow-sm backdrop-blur-sm"
+              >
+                <div className="text-sm font-semibold">{row[0]}</div>
+                <dl className="mt-3 grid grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <dt className="uppercase tracking-wider text-muted-foreground">CodeMateAI</dt>
+                    <dd className="mt-1 font-medium text-emerald-800">{row[1]}</dd>
+                  </div>
+                  <div>
+                    <dt className="uppercase tracking-wider text-muted-foreground">Generic AI chat</dt>
+                    <dd className="mt-1 text-muted-foreground">{row[2]}</dd>
+                  </div>
+                </dl>
+              </li>
+            ))}
+          </ul>
+
+          {/* Table from 640px up, horizontally scrollable with a fade edge */}
+          <div className="hidden overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-sm backdrop-blur-sm sm:block">
+            <div className="scroll-fade-x overflow-x-auto lg:[mask-image:none]">
+              <table className="w-full min-w-[640px] text-sm">
+                <caption className="sr-only">Feature comparison: CodeMateAI versus generic AI chat tools</caption>
+                <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
+                  <tr>
+                    <th scope="col" className="px-4 py-3 text-left">Capability</th>
+                    <th scope="col" className="px-4 py-3 text-left">CodeMateAI</th>
+                    <th scope="col" className="px-4 py-3 text-left">Generic AI chat</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-border/60">
+                  {COMPARISON.map((row) => (
+                    <tr key={row[0]}>
+                      <th scope="row" className="px-4 py-3 text-left font-medium">{row[0]}</th>
+                      <td className="px-4 py-3 font-medium text-emerald-800">{row[1]}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{row[2]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="px-4 py-2 text-[11px] text-muted-foreground lg:hidden">
+              Swipe to compare →
+            </p>
           </div>
         </section>
+
 
         {/* Recent activity */}
         <section className="mb-14">
