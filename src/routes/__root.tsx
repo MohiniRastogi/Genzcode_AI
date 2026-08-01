@@ -87,21 +87,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "CodeMateAI — AI Developer Toolkit" },
+      { title: "CodeMateAI — AI Coding Assistant for Code, APIs, SQL & Docs" },
       {
         name: "description",
         content:
-          "CodeMateAI is an AI-powered developer toolkit: generate, review, convert, debug and document code — all in one workspace.",
+          "CodeMateAI is an AI coding assistant that generates production-ready code, reviews pull requests, fixes bugs, and produces APIs, SQL, regex, README files and technical documentation — right in the browser.",
       },
       { name: "author", content: "CodeMateAI" },
-      { property: "og:title", content: "CodeMateAI — AI Developer Toolkit" },
+      { property: "og:title", content: "CodeMateAI — AI Coding Assistant for Code, APIs, SQL & Docs" },
       {
         property: "og:description",
         content:
-          "Generate. Review. Convert. Optimize. Learn. A premium AI toolkit for modern developers.",
+          "CodeMateAI is an AI coding assistant that generates production-ready code, reviews pull requests, fixes bugs, and produces APIs, SQL, regex, README files and technical documentation — right in the browser.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "CodeMateAI — AI Coding Assistant for Code, APIs, SQL & Docs" },
+      { name: "twitter:description", content: "CodeMateAI is an AI coding assistant that generates production-ready code, reviews pull requests, fixes bugs, and produces APIs, SQL, regex, README files and technical documentation — right in the browser." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8cef277e-43aa-4008-a6b6-078d10bee4e8/id-preview-384abd34--a225df56-741c-4bd1-9f56-9f405c5163ac.lovable.app-1785256403956.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8cef277e-43aa-4008-a6b6-078d10bee4e8/id-preview-384abd34--a225df56-741c-4bd1-9f56-9f405c5163ac.lovable.app-1785256403956.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

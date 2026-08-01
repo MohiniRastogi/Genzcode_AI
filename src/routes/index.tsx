@@ -53,20 +53,20 @@ export const Route = createFileRoute("/")({
           "CodeMateAI is an AI coding assistant that generates production-ready code, reviews pull requests, fixes bugs, and produces APIs, SQL, regex, README files and technical documentation — right in the browser.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:title", content: "CodeMateAI — AI Coding Assistant for Developers" },
+      { property: "og:title", content: "CodeMateAI — AI Coding Assistant for Code, APIs, SQL & Docs" },
       {
         property: "og:description",
         content:
-          "Generate, review, debug and document code with an AI workspace built for students, developers, freelancers and software teams.",
+          "CodeMateAI is an AI coding assistant that generates production-ready code, reviews pull requests, fixes bugs, and produces APIs, SQL, regex, README files and technical documentation — right in the browser.",
       },
       { property: "og:url", content: SITE_URL },
       { property: "og:site_name", content: "CodeMateAI" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "CodeMateAI — AI Coding Assistant" },
+      { name: "twitter:title", content: "CodeMateAI — AI Coding Assistant for Code, APIs, SQL & Docs" },
       {
         name: "twitter:description",
         content:
-          "One AI workspace to generate code, review pull requests, fix bugs, and produce APIs, SQL and documentation.",
+          "CodeMateAI is an AI coding assistant that generates production-ready code, reviews pull requests, fixes bugs, and produces APIs, SQL, regex, README files and technical documentation — right in the browser.",
       },
     ],
     links: [{ rel: "canonical", href: SITE_URL }],
