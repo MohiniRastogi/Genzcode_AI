@@ -21,10 +21,11 @@ export function QuickActionCard({ tool }: { tool: Tool }) {
 
       <Link
         to={tool.to}
-        className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-foreground/80 transition group-hover:text-foreground"
+        className="mt-4 inline-flex min-h-11 items-center gap-1 text-xs font-medium text-foreground/80 transition group-hover:text-foreground sm:min-h-0"
       >
         {soon ? "Preview" : "Launch"} <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
       </Link>
+
       {soon && (
         <span className="absolute right-4 top-4 rounded-full border border-border/60 bg-background/80 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
           Soon
