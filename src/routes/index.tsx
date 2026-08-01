@@ -203,6 +203,15 @@ const WHY_CARDS = [
   { icon: Sparkles, title: "Developer experience", desc: "One clean workspace for generation, review, conversion, SQL, regex and APIs." },
 ];
 
+const COMPARISON: [string, string, string][] = [
+  ["Dedicated code generator", "✓ Structured output", "Free text only"],
+  ["AI code review with scores", "✓ Per-category scoring", "Ad-hoc"],
+  ["Bug solver with fix", "✓ Detects & fixes", "Manual"],
+  ["SQL, Regex, API, README", "✓ Purpose-built tools", "Prompt engineering"],
+  ["History & favorites", "✓ Local & private", "None"],
+  ["Utilities (JSON, JWT, Base64)", "✓ Built-in", "External sites"],
+];
+
 const HOW_STEPS = [
   { n: "01", title: "Describe your task", desc: "Type a plain-English prompt or paste the code you want to work with." },
   { n: "02", title: "Choose an AI tool", desc: "Generator, reviewer, bug solver, converter, SQL, regex, API or docs." },
@@ -368,7 +377,7 @@ function Dashboard() {
                 <Search className="h-3.5 w-3.5" aria-hidden="true" /> Popular tasks
               </div>
               <nav aria-labelledby="popular-tasks-label">
-                <ul className="snap-strip scroll-fade-x md:scroll-fade-none">
+                <ul className="snap-strip scroll-fade-x">
                   {POPULAR_TASKS.map((p) => (
                     <li key={p.label}>
                       <Link
