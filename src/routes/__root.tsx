@@ -199,8 +199,6 @@ function RootComponent() {
                   <ThemeToggle />
                 </div>
               </div>
-
-              </div>
               <div className="sm:hidden">
                 <GlobalSearch fullWidth />
               </div>
