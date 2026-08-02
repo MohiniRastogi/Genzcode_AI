@@ -14,8 +14,8 @@ interface Props {
 function CodeBlock({ language, value }: { language: string; value: string }) {
   const [copied, setCopied] = useState(false);
   return (
-    <div className="group relative my-4 overflow-hidden rounded-2xl border border-border/60 bg-[oklch(0.985_0.005_260)]">
-      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border/60 bg-[oklch(0.985_0.005_260)]/95 px-4 py-2 text-xs text-muted-foreground backdrop-blur-sm">
+    <div className="group relative my-4 overflow-hidden rounded-2xl border border-border/60 bg-muted/40">
+      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border/60 bg-muted/80 px-4 py-2 text-xs text-muted-foreground backdrop-blur-sm">
         <span className="font-mono">{language || "code"}</span>
         <button
           onClick={() => {
