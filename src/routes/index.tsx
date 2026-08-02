@@ -323,7 +323,7 @@ function Dashboard() {
     <div>
       <ScrollReveal className="section-stack mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
         {/* Hero */}
-        <section className="relative mb-12 overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-[oklch(0.97_0.03_270)] via-white to-[oklch(0.95_0.05_310)] p-6 shadow-xl shadow-violet-500/10 ring-1 ring-white/60 sm:p-12">
+        <section className="relative mb-12 overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-primary/10 via-background to-primary/20 p-6 shadow-xl shadow-violet-500/10 ring-1 ring-white/60 sm:p-12">
           <motion.div
             animate={{ x: [0, 20, 0], y: [0, -10, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -395,7 +395,7 @@ function Dashboard() {
         </section>
 
         {/* Trust bar */}
-        <section aria-label="Product highlights" className="mb-10 rounded-3xl border border-border/60 bg-white/60 px-6 py-4 shadow-sm backdrop-blur-md">
+        <section aria-label="Product highlights" className="mb-10 rounded-3xl border border-border/60 bg-card/70 px-6 py-4 shadow-sm backdrop-blur-md">
           <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-medium text-foreground/80">
             {TRUST_BADGES.map((b) => {
               const Icon = b.icon;
@@ -424,7 +424,7 @@ function Dashboard() {
         {/* Continue working */}
         {continueWorking && (
           <section className="mb-10">
-            <div className="rounded-3xl border border-border/60 bg-gradient-to-r from-indigo-50 via-white to-fuchsia-50 p-5 shadow-sm">
+            <div className="rounded-3xl border border-border/60 bg-gradient-to-r from-primary/10 via-background to-primary/10 p-5 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="min-w-0">
                   <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
@@ -472,7 +472,7 @@ function Dashboard() {
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ duration: 0.35, delay: idx * 0.05 }}
                   whileHover={{ y: -3 }}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 bg-white/60 p-5 shadow-sm backdrop-blur-md transition hover:border-violet-500/40 hover:shadow-xl"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-md transition hover:border-violet-500/40 hover:shadow-xl"
                 >
                   <div className={`absolute -right-8 -top-8 h-24 w-24 rounded-full bg-gradient-to-br ${s.grad} opacity-10 blur-2xl transition group-hover:opacity-30`} />
                   <div className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br ${s.grad} text-white shadow-md`}>
@@ -711,7 +711,7 @@ function Dashboard() {
                 <dl className="mt-3 grid grid-cols-2 gap-3 text-xs">
                   <div>
                     <dt className="uppercase tracking-wider text-muted-foreground">CodeMateAI</dt>
-                    <dd className="mt-1 font-medium text-emerald-800">{row[1]}</dd>
+                    <dd className="mt-1 font-medium text-emerald-600 dark:text-emerald-400">{row[1]}</dd>
                   </div>
                   <div>
                     <dt className="uppercase tracking-wider text-muted-foreground">Generic AI chat</dt>
@@ -738,7 +738,7 @@ function Dashboard() {
                   {COMPARISON.map((row) => (
                     <tr key={row[0]}>
                       <th scope="row" className="px-4 py-3 text-left font-medium">{row[0]}</th>
-                      <td className="px-4 py-3 font-medium text-emerald-800">{row[1]}</td>
+                      <td className="px-4 py-3 font-medium text-emerald-600 dark:text-emerald-400">{row[1]}</td>
                       <td className="px-4 py-3 text-muted-foreground">{row[2]}</td>
                     </tr>
                   ))}

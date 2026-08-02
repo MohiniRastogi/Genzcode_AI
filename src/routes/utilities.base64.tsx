@@ -52,7 +52,7 @@ function Page() {
           </div>
           <div className="rounded-3xl border border-border/60 bg-card/70 p-4">
             <h3 className="mb-2 text-sm font-semibold">Base64</h3>
-            <pre className="min-h-64 overflow-auto rounded-2xl border border-border/60 bg-[oklch(0.985_0.005_260)] p-4 font-mono text-xs break-all">
+            <pre className="min-h-64 overflow-auto rounded-2xl border border-border/60 bg-muted/40 p-4 font-mono text-xs break-all">
               {safeEncode(encodeIn)}
             </pre>
             <Button size="sm" variant="ghost" className="mt-2" onClick={() => { navigator.clipboard.writeText(safeEncode(encodeIn)); toast.success("Copied"); }}>
@@ -67,7 +67,7 @@ function Page() {
           </div>
           <div className="rounded-3xl border border-border/60 bg-card/70 p-4">
             <h3 className="mb-2 text-sm font-semibold">Plain text</h3>
-            <pre className="min-h-64 overflow-auto rounded-2xl border border-border/60 bg-[oklch(0.985_0.005_260)] p-4 font-mono text-xs">
+            <pre className="min-h-64 overflow-auto rounded-2xl border border-border/60 bg-muted/40 p-4 font-mono text-xs">
               {safeDecode(decodeIn)}
             </pre>
             <Button size="sm" variant="ghost" className="mt-2" onClick={() => { navigator.clipboard.writeText(safeDecode(decodeIn)); toast.success("Copied"); }}>

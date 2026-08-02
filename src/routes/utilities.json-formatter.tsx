@@ -86,7 +86,7 @@ function Page() {
             </div>
           ) : (
             <>
-              <pre className="min-h-96 overflow-auto rounded-2xl border border-border/60 bg-[oklch(0.985_0.005_260)] p-4 font-mono text-xs">
+              <pre className="min-h-96 overflow-auto rounded-2xl border border-border/60 bg-muted/40 p-4 font-mono text-xs">
                 {output}
               </pre>
               <Button

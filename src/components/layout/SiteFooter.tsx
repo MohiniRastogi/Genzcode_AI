@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Sparkles } from "lucide-react";
+import { BrandLogo } from "@/components/layout/BrandLogo";
+import { GitHubLink } from "@/components/layout/GitHubLink";
+
 
 const columns: { title: string; links: { label: string; to: string }[] }[] = [
   {
@@ -41,21 +43,20 @@ const columns: { title: string; links: { label: string; to: string }[] }[] = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-16 border-t border-border/60 bg-gradient-to-b from-background to-[oklch(0.97_0.01_260)]">
+    <footer className="mt-16 border-t border-border/60 bg-gradient-to-b from-background to-muted/40">
       <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 text-white">
-                <Sparkles className="h-4 w-4" />
-              </div>
-              <span className="text-sm font-semibold tracking-tight">CodeMateAI</span>
-            </div>
+            <BrandLogo />
             <p className="mt-3 text-xs text-muted-foreground">
               A polished AI developer platform for building, reviewing, converting and
               documenting code — all in one dashboard.
             </p>
+            <div className="mt-4">
+              <GitHubLink />
+            </div>
           </div>
+
           {columns.map((col) => (
             <div key={col.title}>
               <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">

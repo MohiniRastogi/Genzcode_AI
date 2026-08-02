@@ -21,7 +21,11 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { GlobalSearch } from "@/components/layout/GlobalSearch";
 import { ToolsMenu } from "@/components/layout/ToolsMenu";
 import { BackToTop } from "@/components/layout/BackToTop";
+import { BrandLogo } from "@/components/layout/BrandLogo";
+import { GitHubLink } from "@/components/layout/GitHubLink";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { Toaster } from "@/components/ui/sonner";
+
 
 function NotFoundComponent() {
   return (
@@ -110,7 +114,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "apple-touch-icon", href: "/favicon.png" },
+
       {
         rel: "preconnect",
         href: "https://fonts.googleapis.com",
@@ -131,6 +137,11 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t==='dark'){document.documentElement.classList.add('dark');}document.documentElement.style.colorScheme=t;}catch(e){}})();`,
+          }}
+        />
         <HeadContent />
       </head>
       <body>
@@ -140,6 +151,7 @@ function RootShell({ children }: { children: ReactNode }) {
     </html>
   );
 }
+
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
@@ -157,7 +169,7 @@ function RootComponent() {
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <div className="flex min-h-screen w-full bg-[oklch(0.985_0.004_260)]">
+        <div className="flex min-h-screen w-full bg-background">
           <AppSidebar />
           <SidebarInset className="flex min-w-0 flex-1 flex-col">
             <header
@@ -171,6 +183,9 @@ function RootComponent() {
               <div className="flex min-w-0 items-center justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-2">
                   <SidebarTrigger className="h-11 w-11 shrink-0 sm:h-9 sm:w-9" />
+                  <Link to="/" className="flex items-center md:hidden">
+                    <BrandLogo showSubtitle={false} />
+                  </Link>
                   <span className="hidden truncate text-sm font-medium text-muted-foreground md:inline">
                     Generate. Review. Convert. Optimize. Learn.
                   </span>
@@ -180,6 +195,8 @@ function RootComponent() {
                   <div className="hidden sm:block">
                     <GlobalSearch />
                   </div>
+                  <GitHubLink />
+                  <ThemeToggle />
                 </div>
               </div>
               <div className="sm:hidden">
