@@ -99,6 +99,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "CodeMateAI is an AI coding assistant that generates production-ready code, reviews pull requests, fixes bugs, and produces APIs, SQL, regex, README files and technical documentation — right in the browser.",
       },
       { name: "author", content: "CodeMateAI" },
+      {
+        name: "theme-color",
+        content: "#f7f8fb",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        name: "theme-color",
+        content: "#111726",
+        media: "(prefers-color-scheme: dark)",
+      },
       { property: "og:title", content: "CodeMateAI — AI Coding Assistant for Code, APIs, SQL & Docs" },
       {
         property: "og:description",
