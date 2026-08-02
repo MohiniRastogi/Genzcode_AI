@@ -3,9 +3,23 @@ import { Moon, Sun } from "lucide-react";
 
 type Theme = "light" | "dark";
 
+const THEME_COLORS: Record<Theme, string> = {
+  light: "#f7f8fb",
+  dark: "#111726",
+};
+
 function apply(theme: Theme) {
   document.documentElement.classList.toggle("dark", theme === "dark");
   document.documentElement.style.colorScheme = theme;
+
+  // Keep the browser chrome (mobile address bar / PWA UI) in sync.
+  document
+    .querySelectorAll('meta[name="theme-color"]')
+    .forEach((el) => el.parentElement?.removeChild(el));
+  const meta = document.createElement("meta");
+  meta.setAttribute("name", "theme-color");
+  meta.setAttribute("content", THEME_COLORS[theme]);
+  document.head.appendChild(meta);
 }
 
 export function ThemeToggle() {
