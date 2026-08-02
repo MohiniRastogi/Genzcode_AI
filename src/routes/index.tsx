@@ -424,7 +424,7 @@ function Dashboard() {
         {/* Continue working */}
         {continueWorking && (
           <section className="mb-10">
-            <div className="rounded-3xl border border-border/60 bg-gradient-to-r from-indigo-50 via-white to-fuchsia-50 p-5 shadow-sm">
+            <div className="rounded-3xl border border-border/60 bg-gradient-to-r from-primary/10 via-background to-primary/10 p-5 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="min-w-0">
                   <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
