@@ -26,6 +26,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { BrandLogo } from "@/components/layout/BrandLogo";
+import { TOOLS } from "@/features/tools/registry";
 
 
 
@@ -114,17 +115,24 @@ export function AppSidebar() {
                 {section.items.map((item) => {
                   const Icon = item.icon;
                   const active = pathname === item.to;
+                  const comingSoon =
+                    TOOLS.find((t) => t.to === item.to)?.status === "soon";
                   return (
                     <SidebarMenuItem key={item.to}>
                       <SidebarMenuButton
                         asChild
                         isActive={active}
-                        tooltip={item.title}
+                        tooltip={comingSoon ? `${item.title} (coming soon)` : item.title}
                         className={isMobile ? "min-h-11" : undefined}
                       >
                         <Link to={item.to} className="flex items-center gap-2">
                           <Icon className="h-4 w-4" />
                           <span>{item.title}</span>
+                          {comingSoon && (
+                            <span className="ml-auto rounded-full border border-border/60 px-1.5 py-px text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                              Soon
+                            </span>
+                          )}
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>

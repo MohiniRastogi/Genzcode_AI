@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { StatCard } from "@/components/tools/StatCard";
 import { QuickActionCard } from "@/components/tools/QuickActionCard";
-import { TOOLS } from "@/features/tools/registry";
+import { TOOLS, READY_TOOLS_COUNT } from "@/features/tools/registry";
 import { useHistory, useHistoryStats } from "@/features/history/useHistory";
 
 export const Route = createFileRoute("/dashboard")({
@@ -171,7 +171,7 @@ function DashboardPage() {
       <section className="mb-14">
         <div className="mb-4 flex items-baseline justify-between">
           <h2 className="text-lg font-semibold tracking-tight">Quick launch</h2>
-          <span className="text-xs text-muted-foreground">{TOOLS.length} tools available</span>
+          <span className="text-xs text-muted-foreground">{READY_TOOLS_COUNT} tools available</span>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {featured.map((t) => (
