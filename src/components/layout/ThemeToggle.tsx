@@ -11,6 +11,8 @@ const THEME_COLORS: Record<Theme, string> = {
 function apply(theme: Theme) {
   document.documentElement.classList.toggle("dark", theme === "dark");
   document.documentElement.style.colorScheme = theme;
+  document.documentElement.setAttribute("data-color-scheme", theme);
+
 
   // Keep the browser chrome (mobile address bar / PWA UI) in sync.
   document
@@ -47,7 +49,7 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       title={theme === "dark" ? "Light mode" : "Dark mode"}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-2xl border border-border/60 bg-background/60 text-foreground/80 backdrop-blur-sm transition hover:bg-background hover:text-foreground"
+      className="inline-flex h-[38px] w-[38px] items-center justify-center rounded-lg border border-border bg-transparent text-foreground/80 transition hover:bg-accent hover:text-foreground"
     >
       {theme === "dark" ? (
         <Sun className="h-4 w-4" aria-hidden="true" />
