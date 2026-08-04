@@ -197,7 +197,7 @@ function RootComponent() {
                 </Link>
                 <ToolsMenu />
                 <div className="flex-1" />
-                <div className="flex shrink-0 items-center gap-2">
+                <div className="flex shrink-0 items-center gap-3">
                   <GlobalSearch iconOnly />
                   <GitHubLink />
                   <ThemeToggle />
