@@ -33,7 +33,7 @@ import { StatCard } from "@/components/tools/StatCard";
 import { QuickActionCard } from "@/components/tools/QuickActionCard";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
-import { TOOLS } from "@/features/tools/registry";
+import { TOOLS, READY_TOOLS_COUNT } from "@/features/tools/registry";
 import { useHistory, useHistoryStats } from "@/features/history/useHistory";
 import {
   Accordion,

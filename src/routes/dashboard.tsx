@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { StatCard } from "@/components/tools/StatCard";
 import { QuickActionCard } from "@/components/tools/QuickActionCard";
-import { TOOLS } from "@/features/tools/registry";
+import { TOOLS, READY_TOOLS_COUNT } from "@/features/tools/registry";
 import { useHistory, useHistoryStats } from "@/features/history/useHistory";
 
 export const Route = createFileRoute("/dashboard")({

@@ -45,7 +45,7 @@ function Page() {
             Open Code Generator
           </Link>
           <Link
-            to="/"
+            to="/dashboard"
             className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background/70 px-4 py-2 text-sm font-medium backdrop-blur-sm transition hover:bg-background"
           >
             <ArrowLeft className="h-4 w-4" /> Back to Dashboard
