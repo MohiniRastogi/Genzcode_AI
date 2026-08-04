@@ -231,3 +231,6 @@ export const CATEGORIES: ToolCategory[] = [
   "Converters",
   "Utilities",
 ];
+
+// Count of tools that are actually built and usable today.
+export const READY_TOOLS_COUNT = TOOLS.filter((t) => t.status === "ready").length;
