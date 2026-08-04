@@ -27,7 +27,10 @@ const TOOL_ALIASES: Record<string, string> = {
   "base64": "base64 encode decode",
 };
 
-export function GlobalSearch({ fullWidth = false }: { fullWidth?: boolean } = {}) {
+export function GlobalSearch({
+  fullWidth = false,
+  iconOnly = false,
+}: { fullWidth?: boolean; iconOnly?: boolean } = {}) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -51,18 +54,26 @@ export function GlobalSearch({ fullWidth = false }: { fullWidth?: boolean } = {}
       <button
         onClick={() => setOpen(true)}
         aria-label="Search tools"
+        title="Search tools (⌘K)"
         className={
-          fullWidth
-            ? "flex min-h-11 w-full items-center gap-2 rounded-2xl border border-border/60 bg-background/70 px-3 py-2 text-sm text-muted-foreground shadow-sm backdrop-blur-sm transition hover:bg-background"
-            : "inline-flex min-h-9 items-center gap-2 rounded-2xl border border-border/60 bg-background/60 px-3 py-1.5 text-xs text-muted-foreground backdrop-blur-sm transition hover:bg-background"
+          iconOnly
+            ? "inline-flex h-[38px] w-[38px] items-center justify-center rounded-lg border border-border bg-transparent text-foreground/80 transition hover:bg-accent hover:text-foreground"
+            : fullWidth
+              ? "flex min-h-11 w-full items-center gap-2 rounded-lg border border-border bg-transparent px-3 py-2 text-sm text-muted-foreground transition hover:bg-accent"
+              : "inline-flex h-[38px] items-center gap-2 rounded-lg border border-border bg-transparent px-3 text-sm text-muted-foreground transition hover:bg-accent"
         }
       >
-        <Search className={fullWidth ? "h-4 w-4" : "h-3.5 w-3.5"} />
-        <span className={fullWidth ? "inline" : "hidden sm:inline"}>Search tools…</span>
-        <kbd className="ml-auto hidden rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] sm:inline">
-          ⌘K
-        </kbd>
+        <Search className="h-4 w-4" />
+        {!iconOnly && (
+          <>
+            <span className={fullWidth ? "inline" : "hidden sm:inline"}>Search tools…</span>
+            <kbd className="ml-auto hidden rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] sm:inline">
+              ⌘K
+            </kbd>
+          </>
+        )}
       </button>
+
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="Search by tool, language, framework — python, react, sql…" />
         <CommandList>
