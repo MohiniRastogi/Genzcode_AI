@@ -57,7 +57,7 @@ export function GlobalSearch({
         title="Search tools (⌘K)"
         className={
           iconOnly
-            ? "inline-flex h-[38px] w-[38px] items-center justify-center rounded-lg border border-border bg-transparent text-foreground/80 transition hover:bg-accent hover:text-foreground"
+            ? "inline-flex h-[38px] w-[38px] items-center justify-center rounded-full border border-border bg-transparent text-foreground/80 transition hover:bg-accent hover:text-foreground"
             : fullWidth
               ? "flex min-h-11 w-full items-center gap-2 rounded-lg border border-border bg-transparent px-3 py-2 text-sm text-muted-foreground transition hover:bg-accent"
               : "inline-flex h-[38px] items-center gap-2 rounded-lg border border-border bg-transparent px-3 text-sm text-muted-foreground transition hover:bg-accent"

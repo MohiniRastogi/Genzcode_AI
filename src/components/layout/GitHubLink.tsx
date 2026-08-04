@@ -11,7 +11,7 @@ export function GitHubLink({ className = "" }: { className?: string }) {
       aria-label="CodeMate on GitHub (opens in a new tab)"
       title="GitHub"
       className={
-        "inline-flex h-[38px] w-[38px] items-center justify-center rounded-lg border border-border bg-transparent text-foreground/80 transition hover:bg-accent hover:text-foreground " +
+        "inline-flex h-[38px] w-[38px] items-center justify-center rounded-full border border-border bg-transparent text-foreground/80 transition hover:bg-accent hover:text-foreground " +
         className
       }
 
