@@ -26,6 +26,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { BrandLogo } from "@/components/layout/BrandLogo";
+import { TOOLS } from "@/features/tools/registry";
 
 
 
