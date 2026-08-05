@@ -284,8 +284,15 @@ function TypingHeadline() {
 }
 
 function AnimatedNumber({ value }: { value: number }) {
-  const [n, setN] = useState(0);
+  const [n, setN] = useState(value);
   useEffect(() => {
+    const reduced =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      setN(value);
+      return;
+    }
     const start = performance.now();
     const dur = 700;
     const from = 0;
@@ -295,12 +302,17 @@ function AnimatedNumber({ value }: { value: number }) {
       const p = Math.min(1, (t - start) / dur);
       setN(Math.round(from + (to - from) * (1 - Math.pow(1 - p, 3))));
       if (p < 1) raf = requestAnimationFrame(step);
+      else setN(to);
     };
     raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      setN(to);
+    };
   }, [value]);
   return <>{n}</>;
 }
+
 
 function Dashboard() {
   const stats = useHistoryStats();
