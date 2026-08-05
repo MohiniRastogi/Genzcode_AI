@@ -197,14 +197,14 @@ function RootComponent() {
                 </Link>
                 <ToolsMenu />
                 <div className="flex-1" />
-                <div className="flex shrink-0 items-center gap-3">
-                  <GlobalSearch iconOnly />
-                  <GitHubLink />
-                  <ThemeToggle />
-                </div>
               </div>
-
             </header>
+            <div className="fixed right-3 top-3 z-50 flex items-center gap-2.5 sm:right-4 sm:top-4 sm:gap-3">
+              <GlobalSearch iconOnly />
+              <GitHubLink />
+              <ThemeToggle />
+            </div>
+
             <main id="main-content" tabIndex={-1} className="min-w-0 flex-1 focus:outline-none">
               <Breadcrumbs />
               <Outlet />
