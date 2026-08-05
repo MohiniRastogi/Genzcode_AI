@@ -790,10 +790,14 @@ function Dashboard() {
         {/* Counters */}
         <section className="mb-14 grid grid-cols-2 gap-4 md:grid-cols-4">
           {[
-            { label: "AI tools ready", value: TOOLS.filter((t) => t.status === "ready").length },
-            { label: "Languages supported", value: 12 },
+            { label: "AI tools ready", value: READY_TOOLS_COUNT },
+            { label: "Languages supported", value: 100 },
             { label: "Backend frameworks", value: 6 },
-            { label: "Utilities included", value: 3 },
+            {
+              label: "Utilities included",
+              value: TOOLS.filter((t) => t.category === "Utilities" && t.status === "ready").length,
+            },
+
           ].map((c) => (
             <div key={c.label} className="rounded-3xl border border-border/60 bg-card/70 p-5 text-center shadow-sm backdrop-blur-sm">
               <div className="bg-gradient-to-br from-indigo-500 to-fuchsia-500 bg-clip-text text-3xl font-semibold text-transparent">
