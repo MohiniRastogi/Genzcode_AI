@@ -285,33 +285,63 @@ function TypingHeadline() {
 
 function AnimatedNumber({ value }: { value: number }) {
   const [n, setN] = useState(value);
+  const ref = useRef<HTMLSpanElement | null>(null);
+
   useEffect(() => {
+    const el = ref.current;
     const reduced =
-      typeof window !== "undefined" &&
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+      typeof window === "undefined" ||
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ||
+      typeof IntersectionObserver === "undefined" ||
+      !el;
+
     if (reduced) {
       setN(value);
       return;
     }
-    const start = performance.now();
-    const dur = 700;
-    const from = 0;
-    const to = value;
+
     let raf = 0;
-    const step = (t: number) => {
-      const p = Math.min(1, (t - start) / dur);
-      setN(Math.round(from + (to - from) * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) raf = requestAnimationFrame(step);
-      else setN(to);
+    let fallback: ReturnType<typeof setTimeout> | undefined;
+    let started = false;
+
+    const animate = () => {
+      if (started) return;
+      started = true;
+      const start = performance.now();
+      const dur = 900;
+      const step = (t: number) => {
+        const p = Math.min(1, (t - start) / dur);
+        setN(Math.round(value * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) raf = requestAnimationFrame(step);
+        else setN(value);
+      };
+      // Guarantee the final value even if rAF is throttled (background tab).
+      fallback = setTimeout(() => setN(value), dur + 400);
+      raf = requestAnimationFrame(step);
     };
-    raf = requestAnimationFrame(step);
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          animate();
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+
     return () => {
+      io.disconnect();
       cancelAnimationFrame(raf);
-      setN(to);
+      if (fallback) clearTimeout(fallback);
+      setN(value);
     };
   }, [value]);
-  return <>{n}</>;
+
+  return <span ref={ref}>{n}</span>;
 }
+
 
 
 function Dashboard() {
