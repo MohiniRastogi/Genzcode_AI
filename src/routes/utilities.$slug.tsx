@@ -22,7 +22,8 @@ export const Route = createFileRoute("/utilities/$slug")({
 });
 
 function Page() {
-  const { tool } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const tool = findTool(slug)!;
   return (
     <ToolPage tool={tool}>
       <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-white to-[oklch(0.97_0.02_260)] p-10 text-center shadow-sm">
