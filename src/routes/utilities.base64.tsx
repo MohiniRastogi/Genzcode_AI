@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { findTool } from "@/features/tools/registry";
-import { Copy } from "lucide-react";
+import { ResultActions } from "@/components/tools/ResultActions";
 
 export const Route = createFileRoute("/utilities/base64")({
   head: () => ({
@@ -55,9 +55,9 @@ function Page() {
             <pre className="min-h-64 overflow-auto rounded-2xl border border-border/60 bg-muted/40 p-4 font-mono text-xs break-all">
               {safeEncode(encodeIn)}
             </pre>
-            <Button size="sm" variant="ghost" className="mt-2" onClick={() => { navigator.clipboard.writeText(safeEncode(encodeIn)); toast.success("Copied"); }}>
-              <Copy className="h-3.5 w-3.5" /> Copy
-            </Button>
+            <div className="mt-2 flex flex-wrap items-center gap-1">
+              <ResultActions content={safeEncode(encodeIn)} baseName="base64-encoded" markdown={false} />
+            </div>
           </div>
         </TabsContent>
         <TabsContent value="decode" className="grid gap-4 md:grid-cols-2">
@@ -70,9 +70,9 @@ function Page() {
             <pre className="min-h-64 overflow-auto rounded-2xl border border-border/60 bg-muted/40 p-4 font-mono text-xs">
               {safeDecode(decodeIn)}
             </pre>
-            <Button size="sm" variant="ghost" className="mt-2" onClick={() => { navigator.clipboard.writeText(safeDecode(decodeIn)); toast.success("Copied"); }}>
-              <Copy className="h-3.5 w-3.5" /> Copy
-            </Button>
+            <div className="mt-2 flex flex-wrap items-center gap-1">
+              <ResultActions content={safeDecode(decodeIn)} baseName="base64-decoded" markdown={false} />
+            </div>
           </div>
         </TabsContent>
       </Tabs>
