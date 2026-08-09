@@ -116,20 +116,6 @@ export function SimpleAITool({
 
   const words = prompt.trim() ? prompt.trim().split(/\s+/).length : 0;
 
-  const doCopy = () => {
-    navigator.clipboard.writeText(markdown);
-    toast.success("Copied to clipboard");
-  };
-
-  const doDownload = () => {
-    const blob = new Blob([markdown], { type: "text/markdown" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename ?? `${tool.id}.md`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
 
   const doShare = async () => {
     try {
