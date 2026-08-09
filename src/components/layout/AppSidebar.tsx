@@ -125,7 +125,7 @@ export function AppSidebar() {
                         tooltip={comingSoon ? `${item.title} (coming soon)` : item.title}
                         className={isMobile ? "min-h-11" : undefined}
                       >
-                        <Link to={item.to} className="flex items-center gap-2">
+                        <Link to={item.to as "/"} className="flex items-center gap-2">
                           <Icon className="h-4 w-4" />
                           <span>{item.title}</span>
                           {comingSoon && (

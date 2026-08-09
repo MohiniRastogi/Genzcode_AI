@@ -1,7 +1,7 @@
-import { Copy, Download, Star } from "lucide-react";
-import { toast } from "sonner";
+import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AIResponseRenderer } from "./AIResponseRenderer";
+import { ResultActions } from "./ResultActions";
 
 interface Props {
   markdown: string;
@@ -16,31 +16,8 @@ export function ResultCard({ markdown, filename = "codemateai-result.md", onSave
       <div className="flex items-center justify-between border-b border-border/60 px-6 py-3">
         <h2 className="text-sm font-semibold">Result</h2>
         <div className="flex items-center gap-2">
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={() => {
-              navigator.clipboard.writeText(markdown);
-              toast.success("Copied to clipboard");
-            }}
-          >
-            <Copy className="h-4 w-4" /> Copy
-          </Button>
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={() => {
-              const blob = new Blob([markdown], { type: "text/markdown" });
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.href = url;
-              a.download = filename;
-              a.click();
-              URL.revokeObjectURL(url);
-            }}
-          >
-            <Download className="h-4 w-4" /> Download
-          </Button>
+          <ResultActions content={markdown} baseName={filename} />
+
           {onSave && (
             <Button
               size="sm"

@@ -5,7 +5,8 @@ import { ToolPage } from "@/components/tools/ToolPage";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { findTool } from "@/features/tools/registry";
-import { Copy, Minimize2, Wand2, CheckCircle2, XCircle } from "lucide-react";
+import { Minimize2, Wand2, CheckCircle2, XCircle } from "lucide-react";
+import { ResultActions } from "@/components/tools/ResultActions";
 
 export const Route = createFileRoute("/utilities/json-formatter")({
   head: () => ({
@@ -89,14 +90,9 @@ function Page() {
               <pre className="min-h-96 overflow-auto rounded-2xl border border-border/60 bg-muted/40 p-4 font-mono text-xs">
                 {output}
               </pre>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="mt-2"
-                onClick={() => { navigator.clipboard.writeText(output); toast.success("Copied"); }}
-              >
-                <Copy className="h-3.5 w-3.5" /> Copy output
-              </Button>
+              <div className="mt-2 flex flex-wrap items-center gap-1">
+                <ResultActions content={output} baseName="formatted.json" markdown={false} />
+              </div>
             </>
           )}
         </div>
