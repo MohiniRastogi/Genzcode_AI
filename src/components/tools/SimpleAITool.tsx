@@ -5,8 +5,6 @@ import {
   Sparkles,
   RefreshCw,
   RotateCcw,
-  Copy,
-  Download,
   Share2,
   Star,
   Trash2,
@@ -19,6 +17,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToolPage } from "@/components/tools/ToolPage";
 import { SkeletonResult } from "@/components/tools/SkeletonResult";
 import { ErrorCard } from "@/components/tools/ErrorCard";
+import { ResultActions } from "@/components/tools/ResultActions";
 import { AIResponseRenderer } from "@/components/tools/AIResponseRenderer";
 import { useHistory } from "@/features/history/useHistory";
 import type { Tool } from "@/features/tools/registry";
@@ -251,12 +250,8 @@ export function SimpleAITool({
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/60 px-4 py-3">
                 <h2 className="text-sm font-semibold">Result</h2>
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <Button size="sm" variant="ghost" onClick={doCopy}>
-                    <Copy className="h-4 w-4" /> Copy
-                  </Button>
-                  <Button size="sm" variant="ghost" onClick={doDownload}>
-                    <Download className="h-4 w-4" /> Download
-                  </Button>
+                  <ResultActions content={markdown} baseName={filename ?? `${tool.id}.md`} />
+
                   <Button size="sm" variant="ghost" onClick={doShare}>
                     <Share2 className="h-4 w-4" /> Share
                   </Button>
