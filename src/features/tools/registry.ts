@@ -143,16 +143,6 @@ export const TOOLS: Tool[] = [
     status: "ready",
   },
   {
-    id: "flowchart-generator",
-    title: "Flowchart Generator",
-    description: "Mermaid diagrams from any prompt.",
-    category: "Generators",
-    icon: Workflow,
-    gradient: "from-teal-500 to-emerald-600",
-    to: "/tools/flowchart-generator",
-    status: "soon",
-  },
-  {
     id: "algorithm-generator",
     title: "Algorithm Generator",
     description: "Pseudocode + complexity analysis.",

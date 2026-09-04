@@ -56,7 +56,6 @@ const NAV = [
       { title: "SQL", to: "/tools/sql-generator", icon: FolderCode },
       { title: "API", to: "/tools/api-generator", icon: FolderCode },
       { title: "README", to: "/tools/readme-generator", icon: FolderCode },
-      { title: "Flowchart", to: "/tools/flowchart-generator", icon: FolderCode },
     ],
   },
   {

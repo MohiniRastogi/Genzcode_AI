@@ -23,7 +23,6 @@ const CATEGORIES: Category[] = [
       "sql-generator",
       "api-generator",
       "readme-generator",
-      "flowchart-generator",
     ],
   },
   {
