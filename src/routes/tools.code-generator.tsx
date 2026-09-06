@@ -24,7 +24,7 @@ import { useHistory } from "@/features/history/useHistory";
 import { useToolPreferences } from "@/features/preferences/useToolPreferences";
 import { Sparkles, RefreshCw, RotateCcw, ArrowRight } from "lucide-react";
 
-const LANGS = ["JavaScript", "TypeScript", "Python", "Java", "Go", "Rust", "C++", "C#", "PHP", "Ruby", "Swift", "Kotlin"];
+const LANGS = ["HTML", "CSS", "JavaScript", "TypeScript", "Python", "Java", "Go", "Rust", "C++", "C", "C#", "PHP", "Ruby", "Swift", "Kotlin"];
 const DIFFICULTIES = ["Beginner", "Intermediate", "Advanced", "Expert"];
 const STYLES = ["Idiomatic", "Functional", "Object-Oriented", "Performance-first"];
 
@@ -112,7 +112,7 @@ function Page() {
   const tool = findTool("code-generator")!;
   const { add } = useHistory();
   const { prefs, set, reset } = useToolPreferences("code-generator", {
-    language: "TypeScript",
+    language: "JavaScript",
     difficulty: "Intermediate",
     framework: "",
     style: "Idiomatic",
