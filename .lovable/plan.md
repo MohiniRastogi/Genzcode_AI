@@ -20,8 +20,8 @@ For HTML and CSS, adjust the system prompt conditionally:
 - Instruct the model NOT to wrap output in functions/classes — return valid HTML markup or a plain CSS stylesheet snippet matching the user's description (component, layout, form, etc.).
 - C, and all existing languages, keep the current section template unchanged.
 
-### 4. Everything else untouched
-- Default selected language stays **TypeScript** (the current default; not changing it to JavaScript — flagging since the request mentioned JavaScript but the tool currently defaults to TypeScript).
+### 4. Default language and everything else
+- Default selected language set to **JavaScript** as requested (currently the tool defaults to TypeScript).
 - Difficulty dropdown, style, framework, comments toggle, history, examples, related tools — all unchanged.
 
 ## Technical details
