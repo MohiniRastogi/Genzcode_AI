@@ -30,7 +30,27 @@ const GenerateInput = z.object({
 export const generateCode = createServerFn({ method: "POST" })
   .inputValidator((v: unknown) => GenerateInput.parse(v))
   .handler(async ({ data }) => {
-    const system = `You are CodeMateAI, a senior software engineer. Return a well-structured Markdown response with these sections in order:
+    const isMarkup = data.language === "HTML" || data.language === "CSS";
+    const system = isMarkup
+      ? `You are CodeMateAI, a senior front-end developer. The target is ${data.language}. Return a well-structured Markdown response with these sections in order:
+## Code
+\`\`\`${data.language.toLowerCase()}
+<code here>
+\`\`\`
+## Explanation
+## Structure
+## Styling Notes
+## Responsiveness
+## Edge Cases
+## Example Usage
+
+Important rules:
+- The code fence language tag MUST be exactly \`${data.language.toLowerCase()}\`.
+- Output valid ${data.language === "HTML" ? "HTML markup" : "CSS stylesheet rules"} — do NOT wrap the output in functions, classes, or any programming-language scaffolding.
+- Produce a snippet appropriate to what the user describes (a component, a layout, a form, etc.).
+
+Be concise but precise. Never omit sections.`
+      : `You are CodeMateAI, a senior software engineer. Return a well-structured Markdown response with these sections in order:
 ## Code
 \`\`\`${data.language.toLowerCase()}
 <code here>
@@ -43,6 +63,7 @@ export const generateCode = createServerFn({ method: "POST" })
 ## Example Input
 ## Example Output
 
+The code fence language tag MUST be exactly \`${data.language.toLowerCase()}\`.
 Be concise but precise. Never omit sections.`;
     const prompt = `Language: ${data.language}
 Difficulty: ${data.difficulty}
