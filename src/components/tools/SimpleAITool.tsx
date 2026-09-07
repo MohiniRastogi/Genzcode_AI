@@ -155,10 +155,19 @@ export function SimpleAITool({
               Draft auto-saved · ⌘/Ctrl + Enter to run
             </span>
             {onResetPrefs && (
-              <Button variant="ghost" size="sm" className="h-7 gap-1 text-xs" onClick={onResetPrefs}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 gap-1 text-xs"
+                onClick={() => {
+                  doClear();
+                  onResetPrefs();
+                }}
+              >
                 <RotateCcw className="h-3 w-3" /> Reset
               </Button>
             )}
+
           </div>
 
           {controls}
