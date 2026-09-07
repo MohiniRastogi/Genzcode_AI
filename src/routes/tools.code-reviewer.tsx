@@ -58,7 +58,16 @@ function Page() {
         <div className="space-y-4 rounded-3xl border border-border/60 bg-card/70 p-5 shadow-sm backdrop-blur-sm">
           <div className="flex items-center justify-between">
             <span className="text-xs text-muted-foreground">Preferences auto-save</span>
-            <Button variant="ghost" size="sm" className="h-7 gap-1 text-xs" onClick={reset}>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 gap-1 text-xs"
+              onClick={() => {
+                setCode("");
+                mutation.reset();
+                reset();
+              }}
+            >
               <RotateCcw className="h-3 w-3" /> Reset
             </Button>
           </div>
