@@ -386,3 +386,34 @@ For each function/class/endpoint: signature, parameters table, return, throws, e
     return run(system, `Code:\n\`\`\`\n${data.code}\n\`\`\``);
   });
 
+
+// ---------- Live Console: simulated execution ----------
+const SimulateInput = z.object({
+  language: z.string().min(1),
+  code: z.string().min(1),
+  stdin: z.string().default(""),
+});
+
+export const simulateExecution = createServerFn({ method: "POST" })
+  .inputValidator((v: unknown) => SimulateInput.parse(v))
+  .handler(async ({ data }) => {
+    const system = `You are a precise ${data.language} runtime simulator. Trace the program exactly and report what it would print.
+Return Markdown with these EXACT sections:
+
+## Output
+\`\`\`text
+<the exact stdout the program would produce, nothing else>
+\`\`\`
+
+## Exit Status
+Success or the compiler/runtime error message.
+
+## Trace Notes
+- Brief notes on the key steps or why it fails.
+
+If the code cannot compile or run, put the compiler/runtime error inside the Output block.`;
+    return run(
+      system,
+      `Language: ${data.language}\nStandard input:\n${data.stdin || "(none)"}\n\nProgram:\n\`\`\`\n${data.code}\n\`\`\``,
+    );
+  });
