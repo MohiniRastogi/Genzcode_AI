@@ -379,7 +379,7 @@ function ConsolePage() {
               </div>
               <iframe
                 title="Code sandbox"
-                sandbox="allow-scripts allow-same-origin"
+                sandbox="allow-scripts"
                 srcDoc={srcDoc}
                 className="hidden"
               />

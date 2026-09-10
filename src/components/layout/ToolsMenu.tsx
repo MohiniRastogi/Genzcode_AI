@@ -27,7 +27,7 @@ const CATEGORIES: Category[] = [
   },
   {
     label: "Utilities",
-    ids: ["json-formatter", "base64", "jwt-decoder"],
+    ids: ["live-console", "json-formatter", "base64", "jwt-decoder"],
   },
 ];
 

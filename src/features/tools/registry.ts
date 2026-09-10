@@ -163,6 +163,16 @@ export const TOOLS: Tool[] = [
     status: "soon",
   },
 
+  {
+    id: "live-console",
+    title: "Live Console",
+    description: "Paste any code and run it with real output.",
+    category: "Utilities",
+    icon: TerminalSquare,
+    gradient: "from-slate-600 to-slate-900",
+    to: "/console",
+    status: "ready",
+  },
   // Utilities (ready)
   {
     id: "json-formatter",

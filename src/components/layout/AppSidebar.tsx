@@ -12,6 +12,7 @@ import {
   Settings,
   Sparkles,
   FolderCode,
+  TerminalSquare,
 } from "lucide-react";
 import {
   Sidebar,
@@ -61,6 +62,7 @@ const NAV = [
   {
     label: "Utilities",
     items: [
+      { title: "Live Console", to: "/console", icon: TerminalSquare },
       { title: "JSON Formatter", to: "/utilities/json-formatter", icon: Wrench },
       { title: "Base64", to: "/utilities/base64", icon: Wrench },
       { title: "JWT Decoder", to: "/utilities/jwt-decoder", icon: Wrench },
