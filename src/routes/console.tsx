@@ -257,7 +257,7 @@ function ConsolePage() {
               <Label htmlFor="console-language">Language</Label>
               <Select value={language} onValueChange={pickLanguage}>
                 <SelectTrigger id="console-language">
-                  <SelectValue />
+                  <SelectValue>{def.label}</SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {groups.map((g) => (
