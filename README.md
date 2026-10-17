@@ -673,7 +673,7 @@ Build CodeMateAI as a premium, scalable AI Developer Toolkit that is production-
 
 This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://code-alchemy-lab-98.lovable.app
+**Live app**:https://genzcodeai.devorbitx.site
 
 ## Build with Lovable
 
