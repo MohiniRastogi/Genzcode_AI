@@ -1,7 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { Play, Eraser, TerminalSquare, Loader2, Sparkles } from "lucide-react";
+import {
+  Play,
+  Eraser,
+  Square,
+  TerminalSquare,
+  Loader2,
+  Sparkles,
+  History,
+  Trash2,
+  RotateCcw,
+  Copy,
+} from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -14,6 +26,7 @@ import {
 } from "@/components/ui/select";
 import { AIResponseRenderer } from "@/components/tools/AIResponseRenderer";
 import { simulateExecution } from "@/lib/ai.functions";
+import { useConsoleHistory, type ConsoleRunEntry } from "@/features/console/useConsoleHistory";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/console")({
@@ -23,7 +36,7 @@ export const Route = createFileRoute("/console")({
       {
         name: "description",
         content:
-          "Paste any snippet and run it instantly. JavaScript, TypeScript, Python and HTML execute in a sandbox; Java, C++, Go and more get a simulated run with predicted output.",
+          "Paste any snippet and run it instantly. JavaScript, TypeScript, Python and HTML execute in a sandbox; Java, C++, Go and more get a simulated run with predicted output. Includes run history, Stop and timeout controls.",
       },
       { property: "og:title", content: "Live Code Console — CodeMateAI" },
       {
@@ -39,6 +52,8 @@ export const Route = createFileRoute("/console")({
 });
 
 const TOKEN = "codemateai-console";
+const JS_TIMEOUT_MS = 10000;
+const PY_TIMEOUT_MS = 90000;
 
 type Engine = "js" | "python" | "html" | "ai";
 
@@ -139,6 +154,23 @@ function htmlDoc(code: string) {
   return `<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:system-ui,sans-serif;margin:16px}</style></head><body>${code}</body></html>`;
 }
 
+function timeAgo(ts: number) {
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60) return "just now";
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ago`;
+  return new Date(ts).toLocaleDateString();
+}
+
+function firstLine(code: string) {
+  const lines = code.split("\n");
+  const head = lines[0] ?? "";
+  const rest = lines.length > 1 ? ` (+${lines.length - 1} more lines)` : "";
+  return head.slice(0, 120) + rest;
+}
+
 function ConsolePage() {
   const [language, setLanguage] = useState("JavaScript");
   const [code, setCode] = useState(STARTERS.JavaScript);
@@ -148,13 +180,55 @@ function ConsolePage() {
   const [running, setRunning] = useState(false);
   const [transformError, setTransformError] = useState<string | null>(null);
   const timer = useRef<number | null>(null);
+  const logsRef = useRef<LogLine[]>([]);
+  const savedRef = useRef(true);
+  const runArgsRef = useRef<{ language: string; code: string; stdin: string } | null>(null);
+  const { runs, add: addRun, remove: removeRun, clear: clearHistory } = useConsoleHistory();
 
   const def = LANGUAGES.find((l) => l.value === language)!;
   const engine = def.engine;
 
   const sim = useMutation({
-    mutationFn: async () => simulateExecution({ data: { language, code, stdin } }),
+    mutationFn: (input: { language: string; code: string; stdin: string }) =>
+      simulateExecution({ data: input }),
   });
+
+  const pushLog = (line: LogLine) => {
+    logsRef.current = [...logsRef.current, line];
+    setLogs(logsRef.current);
+  };
+
+  const snapshotOutput = () => logsRef.current.map((l) => l.text).join("\n");
+
+  /** Save the current run to history once, using the args captured at Run time. */
+  const finishRun = (output?: string, stopped?: boolean) => {
+    if (savedRef.current) return;
+    savedRef.current = true;
+    const args = runArgsRef.current;
+    if (!args) return;
+    addRun({
+      language: args.language,
+      code: args.code,
+      stdin: args.stdin,
+      output: output ?? snapshotOutput(),
+      stopped,
+    });
+  };
+
+  /** Kill the running frame, log why, and record the run. */
+  const stop = (why: "user" | "timeout" = "user") => {
+    if (timer.current) {
+      window.clearTimeout(timer.current);
+      timer.current = null;
+    }
+    setRunning(false);
+    setSrcDoc("");
+    pushLog({
+      level: "info",
+      text: why === "timeout" ? "Execution stopped: timed out." : "Execution stopped.",
+    });
+    finishRun(undefined, true);
+  };
 
   useEffect(() => {
     const onMessage = (e: MessageEvent) => {
@@ -166,11 +240,15 @@ function ConsolePage() {
       };
       if (!data || data.__token !== TOKEN) return;
       if (data.done) {
+        if (timer.current) {
+          window.clearTimeout(timer.current);
+          timer.current = null;
+        }
         setRunning(false);
-        if (timer.current) window.clearTimeout(timer.current);
+        finishRun();
         return;
       }
-      setLogs((prev) => [...prev, { level: data.level ?? "log", text: data.text ?? "" }]);
+      pushLog({ level: data.level ?? "log", text: data.text ?? "" });
     };
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
@@ -179,49 +257,82 @@ function ConsolePage() {
   const pickLanguage = (value: string) => {
     setLanguage(value);
     setLogs([]);
+    logsRef.current = [];
     setSrcDoc("");
+    setRunning(false);
     setTransformError(null);
+    savedRef.current = true;
+    if (timer.current) {
+      window.clearTimeout(timer.current);
+      timer.current = null;
+    }
     sim.reset();
     const starter = STARTERS[value];
     const isStarter = Object.values(STARTERS).includes(code.trim());
     if (starter && (!code.trim() || isStarter)) setCode(starter);
   };
 
+  /** Reset the output without reloading: stops any run and clears the console. */
   const clear = () => {
+    if (timer.current) {
+      window.clearTimeout(timer.current);
+      timer.current = null;
+    }
     setLogs([]);
+    logsRef.current = [];
     setSrcDoc("");
     setRunning(false);
     setTransformError(null);
+    savedRef.current = true;
     sim.reset();
   };
 
-  const run = async () => {
+  const run = async (over?: { language?: string; code?: string; stdin?: string }) => {
+    const lang = over?.language ?? language;
+    const c = over?.code ?? code;
+    const s = over?.stdin ?? stdin;
+    const eng = LANGUAGES.find((l) => l.value === lang)?.engine ?? "ai";
+
     setLogs([]);
+    logsRef.current = [];
     setTransformError(null);
-    sim.reset();
-    if (!code.trim()) return;
-
-    if (engine === "html") {
-      setSrcDoc(htmlDoc(code));
+    savedRef.current = false;
+    if (timer.current) {
+      window.clearTimeout(timer.current);
+      timer.current = null;
+    }
+    if (!c.trim()) {
+      savedRef.current = true;
       return;
     }
-    if (engine === "ai") {
+    runArgsRef.current = { language: lang, code: c, stdin: s };
+
+    if (eng === "html") {
+      setSrcDoc(htmlDoc(c));
+      return;
+    }
+    if (eng === "ai") {
       setSrcDoc("");
-      sim.mutate();
+      try {
+        const res = await sim.mutateAsync({ language: lang, code: c, stdin: s });
+        finishRun(res.markdown);
+      } catch (err) {
+        finishRun(err instanceof Error ? err.message : String(err));
+      }
       return;
     }
-    if (engine === "python") {
+    if (eng === "python") {
       setRunning(true);
-      setSrcDoc(pythonDoc(code, stdin));
-      timer.current = window.setTimeout(() => setRunning(false), 90000);
+      setSrcDoc(pythonDoc(c, s));
+      timer.current = window.setTimeout(() => stop("timeout"), PY_TIMEOUT_MS);
       return;
     }
 
-    let js = code;
-    if (language === "TypeScript") {
+    let js = c;
+    if (lang === "TypeScript") {
       try {
         const { transform } = await import("sucrase");
-        js = transform(code, { transforms: ["typescript", "jsx", "imports"] }).code;
+        js = transform(c, { transforms: ["typescript", "jsx", "imports"] }).code;
       } catch (err) {
         setTransformError(err instanceof Error ? err.message : String(err));
         return;
@@ -229,11 +340,31 @@ function ConsolePage() {
     }
     setRunning(true);
     setSrcDoc(jsDoc(js));
-    timer.current = window.setTimeout(() => setRunning(false), 10000);
+    timer.current = window.setTimeout(() => stop("timeout"), JS_TIMEOUT_MS);
+  };
+
+  const reRun = (r: ConsoleRunEntry) => {
+    setLanguage(r.language);
+    setCode(r.code);
+    setStdin(r.stdin);
+    void run({ language: r.language, code: r.code, stdin: r.stdin });
+  };
+
+  const copyText = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success("Copied to clipboard");
+    } catch {
+      toast.error("Could not copy");
+    }
   };
 
   const busy = running || sim.isPending;
   const groups = Array.from(new Set(LANGUAGES.map((l) => l.group)));
+  const timeoutHint =
+    engine === "python"
+      ? "Runs stop automatically after 90s."
+      : "Runs stop automatically after 10s.";
 
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-8">
@@ -301,10 +432,15 @@ function ConsolePage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <Button onClick={run} disabled={busy || !code.trim()} className="gap-1.5">
+            <Button onClick={() => void run()} disabled={busy || !code.trim()} className="gap-1.5">
               {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4" />}
               {busy ? "Running…" : engine === "ai" ? "Simulate run" : "Run"}
             </Button>
+            {running && (
+              <Button variant="destructive" onClick={() => stop("user")} className="gap-1.5">
+                <Square className="h-4 w-4" /> Stop
+              </Button>
+            )}
             <Button variant="ghost" onClick={clear} className="gap-1.5">
               <Eraser className="h-4 w-4" /> Clear
             </Button>
@@ -312,8 +448,8 @@ function ConsolePage() {
               {engine === "ai"
                 ? "Output is predicted by AI — no compiler runs."
                 : engine === "python"
-                  ? "First Python run downloads the runtime (a few seconds)."
-                  : "Runs in a sandboxed frame in your browser."}
+                  ? `First Python run downloads the runtime (a few seconds). ${timeoutHint}`
+                  : `Runs in a sandboxed frame in your browser. ${timeoutHint}`}
             </span>
           </div>
         </section>
@@ -387,6 +523,80 @@ function ConsolePage() {
           )}
         </section>
       </div>
+
+      <section className="mt-10 space-y-3" aria-label="Run history">
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="flex items-center gap-2 text-sm font-semibold">
+            <History className="h-4 w-4" />
+            Run history
+            {runs.length > 0 && (
+              <span className="font-normal text-muted-foreground">({runs.length})</span>
+            )}
+          </h2>
+          {runs.length > 0 && (
+            <Button size="sm" variant="ghost" onClick={clearHistory} className="gap-1.5">
+              <Trash2 className="h-4 w-4" /> Clear history
+            </Button>
+          )}
+        </div>
+        {runs.length === 0 ? (
+          <p className="rounded-2xl border border-dashed border-border/60 p-4 text-sm text-muted-foreground">
+            Runs you execute here are saved automatically — revisit them, copy their output, or
+            re-run with one click.
+          </p>
+        ) : (
+          <div className="grid gap-3 md:grid-cols-2">
+            {runs.map((r) => (
+              <article
+                key={r.id}
+                className="rounded-2xl border border-border/60 bg-card/60 p-3"
+              >
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <span className="text-xs font-medium">{r.language}</span>
+                  <span className="text-[11px] text-muted-foreground">
+                    {timeAgo(r.createdAt)}
+                    {r.stopped ? " · stopped" : ""}
+                  </span>
+                </div>
+                <pre className="mb-2 max-h-14 overflow-hidden whitespace-pre-wrap break-all rounded-lg bg-muted/40 p-2 font-mono text-[11px] leading-snug text-muted-foreground">
+                  {firstLine(r.code)}
+                </pre>
+                <p className="mb-2 line-clamp-3 whitespace-pre-wrap break-all font-mono text-[11px] leading-snug text-muted-foreground">
+                  {r.output || "(no output)"}
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    disabled={busy}
+                    onClick={() => reRun(r)}
+                    className="gap-1.5"
+                  >
+                    <RotateCcw className="h-3.5 w-3.5" /> Re-run
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    disabled={!r.output}
+                    onClick={() => void copyText(r.output)}
+                    className="gap-1.5"
+                  >
+                    <Copy className="h-3.5 w-3.5" /> Copy output
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => removeRun(r.id)}
+                    aria-label="Delete this run"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }
